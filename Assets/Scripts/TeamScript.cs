@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿// using System.Runtime.InteropServices;
+// using System.Threading;
+// using System.Diagnostics;
+// using System.Runtime.CompilerServices;
+using System;
+// using System.Globalization;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,19 +31,20 @@ public class TeamScript : MonoBehaviour
     { 
         this.game = GetComponentInParent<Game>();  
         this.team = this;
-        Debug.Log(this.ToString());
-        score = 0;
+        Debug.Log( "TeamScript"+this.ToString()+"(TeamScript)");
+        this.score = 0;
+        //game knows team possesion statuses -- offensive team and defensive team fields
+        Debug.Log(game.offensiveTeam.ToString());
+        if( game.offensiveTeam.ToString() == this.ToString()+"(TeamScript)" )
+        {
+            this.teamState = TeamState.OFF;
+        }else { this.teamState = TeamState.DEF;}
     }
 
     // Update is called once per frame
     void Update()
     {
-        // this.team = this;
-        foreach(Player player in players)
-        {
-            Debug.Log(player);
-            player.playerTeam = this;
-        }
+        
     }
 
     // public void updatePossesionState(Game game)

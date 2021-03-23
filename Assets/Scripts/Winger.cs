@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿
+using System;
+// using System.Globalization;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +10,7 @@ public class Winger :  Player
 
     private float throwVal = 3f;
     private float moveVal = 30;
+    // private GameObject ball;
     
 
     // Start is called before the first frame update
@@ -23,13 +27,24 @@ public class Winger :  Player
         }
         simpleCharacterController.moveSpeed = moveVal;
         
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         base.init();
+        // Debug.Log(playerTeam);
+        Debug.Log(playerTeam);
+        findBallInGame(playerTeam.game);
+        Debug.Log("Winger "+ball);
+        
+        // findBallInGame(playerTeam.game);
+        // Debug.Log("Winger "+ball);
+        Debug.Log(ball.GetComponent<Ball>());
+        //ball is the GameObject, getComoonent gets the Ball script
         isBallHolder = ball.GetComponent<Ball>().isBeingHeld;
+        // isBallHolder = true;
         
         if(isBallHolder)
         {
