@@ -9,11 +9,15 @@ public class Hooker :  Player
     private float moveVal = 15;
     void Start() 
     {
-        
+
     } 
 
     void update()
     {
         
+    //set isbBallHolder
+    // heldObject = actionsCmps[0].heldObject;  
+    // isBallHolder = heldObject.GetComponent<Ball>().isBeingHeld;
+    // updatePossession(playerTeam);
     }
 }

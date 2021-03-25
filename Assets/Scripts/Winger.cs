@@ -17,5 +17,9 @@ public class Winger :  Player
     void update()
     {
         
+    //set isbBallHolder
+    // heldObject = actionsCmps[0].heldObject;  
+    // isBallHolder = heldObject.GetComponent<Ball>().isBeingHeld;
+    // updatePossession(playerTeam);
     }
 }
