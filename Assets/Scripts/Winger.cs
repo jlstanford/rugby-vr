@@ -17,6 +17,7 @@ public class Winger :  Player
 
     void Start()
     {
+        base.init();
         // simpleCharacterController.playerSpeed = speedMod;
         playerState = PlayerState.STAGGERED;
         actionsCmps = GetComponentsInChildren<VRGrab>();
@@ -25,7 +26,10 @@ public class Winger :  Player
         {
             actionsCmp.throwForce = throwVal;
         }
+        if(simpleCharacterController != null)
+        {
         simpleCharacterController.moveSpeed = moveVal;
+        }
         
         
     }
@@ -33,19 +37,10 @@ public class Winger :  Player
     // Update is called once per frame
     void Update()
     {
-        base.init();
-        // Debug.Log(playerTeam);
-        Debug.Log(playerTeam);
-        findBallInGame(playerTeam.game);
-        Debug.Log("Winger "+ball);
         
-        // findBallInGame(playerTeam.game);
-        // Debug.Log("Winger "+ball);
-        Debug.Log(ball.GetComponent<Ball>());
+        findBallInGame(playerTeam.game);
         //ball is the GameObject, getComoonent gets the Ball script
         isBallHolder = ball.GetComponent<Ball>().isBeingHeld;
-        // isBallHolder = true;
-        
         if(isBallHolder)
         {
             playerState = PlayerState.BALL_CARRYING;
@@ -66,7 +61,8 @@ public class Winger :  Player
         }
     }
 
-    public void scoreTry()
+
+    public override void scoreTry()
     {
         // playerTeam.updateScore( playerTeam.getScore() + 5 );
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class VRHandAnimator : MonoBehaviour
 {
     private VRInput controller;
-    private Animator handAnimator;
+    public Animator handAnimator;
     // Awake is called before the Start method
     void Awake()
     {

@@ -304,6 +304,26 @@ MonoBehaviour:
   passForce: 1
   targetObject: {fileID: 1249131731}
   destinationOffset: {x: 0, y: 2.75, z: 0}
+--- !u!114 &88039632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88039630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caf8e477bc17b9342ab250328249539a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerState: 0
+  throwForce: 0
+  moveSpeed: 0
+  playerTeam: {fileID: 0}
+  simpleCharacterController: {fileID: 0}
+  actionsCmps: []
+  isBallHolder: 0
+  ball: {fileID: 0}
 --- !u!4 &88039633 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 78f102766cc0fea42963731258f02590,
@@ -542,6 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04b398497cab444418b161c3f9e59f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  handAnimator: {fileID: 0}
 --- !u!54 &166487526
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -806,8 +827,8 @@ MonoBehaviour:
   score: 0
   players:
   - {fileID: 1249131734}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 88039632}
+  - {fileID: 2698941577992039696}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -4703,7 +4724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211d3d9e5f47ec146b45c125fec988b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
+  playerState: 2
   throwForce: 0
   moveSpeed: 0
   playerTeam: {fileID: 0}
@@ -5281,6 +5302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04b398497cab444418b161c3f9e59f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  handAnimator: {fileID: 0}
 --- !u!65 &1832524437
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5468,7 +5490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf8e477bc17b9342ab250328249539a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
+  playerState: 2
   throwForce: 0
   moveSpeed: 0
   playerTeam: {fileID: 0}
@@ -7000,6 +7022,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2698941577992039692}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2698941577992039696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2698941577992039694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 211d3d9e5f47ec146b45c125fec988b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerState: 0
+  throwForce: 0
+  moveSpeed: 0
+  playerTeam: {fileID: 0}
+  simpleCharacterController: {fileID: 0}
+  actionsCmps: []
+  isBallHolder: 0
+  ball: {fileID: 0}
 --- !u!114 &2698941577992039697
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,35 +19,36 @@ public class VRJoystickMovement : MonoBehaviour
 
     void Update()
     {
-       if(controller)
-       {
+        if (!controller)
+        {
+            return;
+        }
         // Debug.Log(controller);
-        if (controller.joystickAxisVerticalValue<0)
+        if (controller.joystickAxisVerticalValue < 0)
         {
             Debug.Log("Going Forward");
             // transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
             float playerY = transform.position.y;
             transform.Translate(playerCam.transform.forward * Time.deltaTime * moveSpeed);
-            transform.position = new Vector3(transform.position.x,playerY,transform.position.z); //comment out if you wanna FLYYY ;)
+            transform.position = new Vector3(transform.position.x, playerY, transform.position.z); //comment out if you wanna FLYYY ;)
         }
-        if (controller.joystickAxisVerticalValue>0)
+        if (controller.joystickAxisVerticalValue > 0)
         {
             Debug.Log("Going Backward");
             transform.Translate(Vector3.back * Time.deltaTime * moveSpeed);
             // transform.Translate(-playerCam.transform.forward * Time.deltaTime * moveSpeed);
         }
-        if (controller.joystickAxisHorizontalValue<0)
+        if (controller.joystickAxisHorizontalValue < 0)
         {
             Debug.Log("Going left");
             transform.Translate(Vector3.left * Time.deltaTime * moveSpeed);
         }
-        if (controller.joystickAxisHorizontalValue>0)
+        if (controller.joystickAxisHorizontalValue > 0)
         {
             Debug.Log("Going Right");
             transform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
         }
-       }
-       
+
     }
 
 

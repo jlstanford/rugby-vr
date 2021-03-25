@@ -19,10 +19,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
 void Start()
 {
-    // playerTeam = GetComponentInParent<TeamScript>();
+    playerTeam = GetComponentInParent<TeamScript>();
 }
 
-public void findBallInGame(Game game)
+public virtual void findBallInGame(Game game)
 {
     ball = game.getBall();
 }
@@ -34,6 +34,11 @@ public void init()
     // Debug.Log(playerTeam);
     // findBallInGame(playerTeam.game);
     playerTeam = GetComponentInParent<TeamScript>();
+    actionsCmps = GetComponentsInChildren<VRGrab>();
+    // foreach( TeamScript team in GetComponentsInParent<TeamScript>() )
+    // {
+    //     Debug.Log("Player "+team);
+    // }
 
 }
 
@@ -48,7 +53,7 @@ void update()
     
 }
 
-void scoreTry()
+public virtual void scoreTry()
 {
     //  playerTeam.updateScore( playerTeam.getScore() + 5 );
 }

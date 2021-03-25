@@ -14,8 +14,8 @@ public class Game : MonoBehaviour
 
     private int hondaScore;
     private int carnivalScore;
-    public Team offensiveTeam;
-    public Team defensiveTeam;
+    public static Team offensiveTeam;
+    public static Team defensiveTeam;
     public GameObject ball;
     private GameStyle gameStyle;
 
@@ -30,21 +30,21 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-        // this.offensiveTeam = Team.TEAM_HONDA;
-        // this.defensiveTeam = Team.TEAM_CARNIVAL;
+    
         this.gameStyle = GameStyle.SEVENS;
         coinFlip();
         TeamScript[] teamScripts = GetComponentsInChildren<TeamScript>();
-        foreach(TeamScript teamScript in teamScripts)
-        {
-            if(teamScript.team.ToString()/*TeamScript*/ == offensiveTeam.ToString()+" (TeamScript)"/*Enum*/ )
-            {
-                teamScript.teamState = TeamScript.TeamState.OFF;
-            // } else 
-            // {
-            //     this.teamState = TeamScript.TeamState.DEF;
-            }
-        }
+        // foreach(TeamScript teamScript in teamScripts)
+        // {
+        //     Debug.Log("Game "+teamScript);
+        //     // if(teamScript.team.ToString()/*TeamScript*/ == offensiveTeam.ToString()+" (TeamScript)"/*Enum*/ )
+        //     // {
+        //     //     teamScript.teamState = TeamScript.TeamState.OFF;
+        //     // // } else 
+        //     // // {
+        //     // //     this.teamState = TeamScript.TeamState.DEF;
+        //     // }
+        // }
         
     }
 
@@ -67,7 +67,7 @@ public class Game : MonoBehaviour
 
     public void setDefense(Team team)
     {
-         defensiveTeam = team;
+        defensiveTeam = team;
     }
 
     public void coinFlip()
