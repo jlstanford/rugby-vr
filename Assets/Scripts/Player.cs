@@ -33,16 +33,16 @@ public void init(Game game, TeamScript team)
     // isBallHolder = false;
     
     // //set playerState
-    // if(team.teamState == TeamScript.TeamState.OFF){
-    // //     if(isBallHolder == false)
-    // //     {
-    //      playerState = PlayerState.STAGGERED;
-    // //     }else
-    // //     {
-    // //         playerState = PlayerState.BALL_CARRYING;
-    // //     }
+    if(team.teamState == TeamScript.TeamState.OFF){
+    //     if(isBallHolder == false)
+    //     {
+         playerState = PlayerState.STAGGERED;
+    //     }else
+    //     {
+    //         playerState = PlayerState.BALL_CARRYING;
+    //     }
         
-    // } else { playerState = PlayerState.FLAT; }
+    } else { playerState = PlayerState.FLAT; }
     
     // playerState = PlayerState.STAGGERED;
 
