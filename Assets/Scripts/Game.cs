@@ -14,8 +14,8 @@ public class Game : MonoBehaviour
 
     private int hondaScore;
     private int carnivalScore;
-    public static Team offensiveTeam;
-    public static Team defensiveTeam;
+    public static TeamScript offensiveTeam;
+    public static TeamScript defensiveTeam;
     public GameObject ball;
     private GameStyle gameStyle;
 
@@ -32,19 +32,19 @@ public class Game : MonoBehaviour
     {
     
         this.gameStyle = GameStyle.SEVENS;
-        coinFlip();
-        TeamScript[] teamScripts = GetComponentsInChildren<TeamScript>();
-        // foreach(TeamScript teamScript in teamScripts)
-        // {
-        //     Debug.Log("Game "+teamScript);
-        //     // if(teamScript.team.ToString()/*TeamScript*/ == offensiveTeam.ToString()+" (TeamScript)"/*Enum*/ )
-        //     // {
-        //     //     teamScript.teamState = TeamScript.TeamState.OFF;
-        //     // // } else 
-        //     // // {
-        //     // //     this.teamState = TeamScript.TeamState.DEF;
-        //     // }
-        // }
+        
+        TeamScript[] teams = GetComponentsInChildren<TeamScript>();
+        // Team[] teams1 = [offensiveTeam,defensiveTeam];
+        coinFlip(teams);
+
+
+        foreach(TeamScript ts in teams)
+        {
+            ts.init(this);
+            // ts.setGame(this);
+            // ts.setPossession(this);
+            Debug.Log(ts);
+        }
         
     }
 
@@ -59,27 +59,41 @@ public class Game : MonoBehaviour
         return this.ball;
     }
 
-    public void setOffense(Team team)
+    // public TeamScript.TeamState getPossessionFor(TeamScript team)
+    // {
+       
+    //     TeamScript.TeamState possession = TeamScript.TeamState.LINED_UP;
+    //     if(offensiveTeam == team)
+    //     {
+    //         possession = TeamScript.TeamState.OFF;
+    //     }else 
+    //     {
+    //         possession = TeamScript.TeamState.DEF;
+    //     }
+    //     return possession;
+    // }
+
+    public void setOffense(TeamScript team)
     {
         offensiveTeam = team;
 
     }
 
-    public void setDefense(Team team)
+    public void setDefense(TeamScript team)
     {
         defensiveTeam = team;
     }
 
-    public void coinFlip()
+    public void coinFlip(TeamScript[] teams)
     {
         var rnd = new System.Random();
         var randNum = rnd.Next();
         if (randNum%2 == 0 ) {
-            setOffense(Team.TeamCarnival);
-            setDefense(Team.TeamHonda);
+            setOffense(teams[0]);
+            setDefense(teams[1]);
         } else {
-            setOffense(Team.TeamHonda);
-            setDefense(Team.TeamCarnival); 
+            setOffense(teams[1]);
+            setDefense(teams[0]); 
         }
     }
 

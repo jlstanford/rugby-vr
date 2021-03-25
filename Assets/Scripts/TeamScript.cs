@@ -26,24 +26,39 @@ public class TeamScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     { 
-        var thisTeam = this.ToString();
-        this.game = GetComponentInParent<Game>();  
-        this.team = this;
-        Debug.Log( "Starting TeamScript " +thisTeam);
-        this.score = 0;
-        string offensiveTeamStr = Game.offensiveTeam.ToString(); //TODO: changes everytime for whatever reason, i'm annoyed
-        //game knows team possesion statuses -- offensive team and defensive team fields
-        Debug.Log("TeamScript's Game.offensiveTeam - "+offensiveTeamStr);
-        Debug.Log($"TeamScript - {thisTeam.Contains(offensiveTeamStr)}");
-        if(   thisTeam.Contains(offensiveTeamStr) )
-        {
-            Debug.Log("Setting TeamState as OFF for "+ thisTeam );
-            this.teamState = TeamState.OFF;
-        }else { 
-            Debug.Log("Setting TeamState as DEF for "+ thisTeam );
-            this.teamState = TeamState.DEF;
-            }
+       
 
+    }
+
+    public void init(Game game) 
+    {
+        var thisTeam = this.ToString();
+        setGame(game);
+        setPossession(game);
+        score = 0;
+        foreach(Player player in players)
+        {
+            player.init(game,this);
+            // player.setTeam(this);
+            // player.setGame(game);
+            Debug.Log(player);
+        }
+    }
+
+    public void setPossession(Game game)
+    {
+        if(Game.offensiveTeam == this)
+        {
+            teamState = TeamScript.TeamState.OFF;
+        }else 
+        {
+            teamState = TeamScript.TeamState.DEF;
+        }
+    }
+
+    public void setGame(Game game)
+    {
+        this.game = game;
     }
 
     // Update is called once per frame

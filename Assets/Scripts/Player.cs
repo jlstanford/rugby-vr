@@ -4,53 +4,58 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public PlayerState playerState;
     public float throwForce;
     public float moveSpeed;
+    public PlayerState playerState;
     public TeamScript playerTeam;
+    public Game game;
+    public GameObject ball;
     public VRJoystickMovement simpleCharacterController;
     public VRGrab[] actionsCmps;
-
     public bool isBallHolder;
 
-    //A player should always know where the ball is 
-    public GameObject ball;
-
     // Start is called before the first frame update
-void Start()
+public virtual GameObject findBallInGame(Game game)
 {
-    playerTeam = GetComponentInParent<TeamScript>();
+    // Debug.Log(game);
+    return game.getBall();;
 }
 
-public virtual void findBallInGame(Game game)
+public void init(Game game, TeamScript team)
 {
-    ball = game.getBall();
-}
-
-public void init()
-{
-    //player sets itself up
-    // where its supposed to be, finds where the ball is, finds where the enemies are 
-    // Debug.Log(playerTeam);
-    // findBallInGame(playerTeam.game);
-    playerTeam = GetComponentInParent<TeamScript>();
+   
     actionsCmps = GetComponentsInChildren<VRGrab>();
-    // foreach( TeamScript team in GetComponentsInParent<TeamScript>() )
-    // {
-    //     Debug.Log("Player "+team);
-    // }
+    simpleCharacterController = GetComponentInChildren<VRJoystickMovement>();
+    setGame(game);
+    setTeam(team);
+    ball = game.ball;
+    //set isbBallHolder
+    // isBallHolder = false;
+    
+    // //set playerState
+    // if(team.teamState == TeamScript.TeamState.OFF){
+    // //     if(isBallHolder == false)
+    // //     {
+    //      playerState = PlayerState.STAGGERED;
+    // //     }else
+    // //     {
+    // //         playerState = PlayerState.BALL_CARRYING;
+    // //     }
+        
+    // } else { playerState = PlayerState.FLAT; }
+    
+    // playerState = PlayerState.STAGGERED;
 
 }
 
-void update()
+public void setGame(Game game)
 {
-    // findBallInGame(playerTeam.game);
+    this.game = game;
+}
 
-    // if(isBallHolder)
-    // {
-    //     playerTeam.teamState = TeamScript.TeamState.OFF;
-    // } else { playerTeam.teamState = TeamScript.TeamState.OFF;}
-    
+public void setTeam(TeamScript team)
+{
+    this.playerTeam = team;
 }
 
 public virtual void scoreTry()

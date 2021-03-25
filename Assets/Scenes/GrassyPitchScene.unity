@@ -316,14 +316,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf8e477bc17b9342ab250328249539a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
   throwForce: 0
   moveSpeed: 0
+  playerState: 0
   playerTeam: {fileID: 0}
+  game: {fileID: 0}
+  ball: {fileID: 0}
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
   isBallHolder: 0
-  ball: {fileID: 0}
 --- !u!4 &88039633 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 78f102766cc0fea42963731258f02590,
@@ -827,12 +828,8 @@ MonoBehaviour:
   score: 0
   players:
   - {fileID: 1249131734}
-  - {fileID: 88039632}
+  - {fileID: 1832947715}
   - {fileID: 2698941577992039696}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   game: {fileID: 0}
   team: {fileID: 0}
   teamState: 0
@@ -3706,14 +3703,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211d3d9e5f47ec146b45c125fec988b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
   throwForce: 0
   moveSpeed: 0
+  playerState: 0
   playerTeam: {fileID: 0}
+  game: {fileID: 0}
+  ball: {fileID: 0}
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
   isBallHolder: 0
-  ball: {fileID: 0}
 --- !u!114 &1249131735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3726,14 +3724,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf8e477bc17b9342ab250328249539a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
   throwForce: 0
   moveSpeed: 0
+  playerState: 0
   playerTeam: {fileID: 0}
+  game: {fileID: 0}
+  ball: {fileID: 0}
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
   isBallHolder: 0
-  ball: {fileID: 0}
 --- !u!4 &1280798026 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4324904055579858554, guid: cf3f63826e612a241b81731a89313752,
@@ -4724,14 +4723,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211d3d9e5f47ec146b45c125fec988b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 2
   throwForce: 0
   moveSpeed: 0
+  playerState: 2
   playerTeam: {fileID: 0}
+  game: {fileID: 0}
+  ball: {fileID: 0}
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
   isBallHolder: 0
-  ball: {fileID: 0}
 --- !u!1001 &1554249937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5490,14 +5490,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf8e477bc17b9342ab250328249539a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 2
   throwForce: 0
   moveSpeed: 0
+  playerState: 2
   playerTeam: {fileID: 0}
+  game: {fileID: 0}
+  ball: {fileID: 0}
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
   isBallHolder: 0
-  ball: {fileID: 0}
 --- !u!1001 &1843020683
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6691,13 +6692,8 @@ MonoBehaviour:
   score: 0
   players:
   - {fileID: 1468401137}
-  - {fileID: 1832947715}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  game: {fileID: 0}
+  - {fileID: 88039632}
+  game: {fileID: 1462708270}
   team: {fileID: 0}
   teamState: 0
 --- !u!1 &2135617074
@@ -7034,14 +7030,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211d3d9e5f47ec146b45c125fec988b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
   throwForce: 0
   moveSpeed: 0
+  playerState: 0
   playerTeam: {fileID: 0}
+  game: {fileID: 0}
+  ball: {fileID: 0}
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
   isBallHolder: 0
-  ball: {fileID: 0}
 --- !u!114 &2698941577992039697
 MonoBehaviour:
   m_ObjectHideFlags: 0
