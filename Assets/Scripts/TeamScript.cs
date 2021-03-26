@@ -11,8 +11,9 @@ public class TeamScript : MonoBehaviour
 
     public int score;
     public Player[] players;
+    public Player ballHolder;
     public Game game;
-    public TeamScript team;
+    // public TeamScript team;
     public TeamState teamState;
     [System.Serializable]
     public enum TeamState
@@ -35,7 +36,7 @@ public class TeamScript : MonoBehaviour
         var thisTeam = this.ToString();
         setGame(game);
         setPossession(game);
-        score = 0;
+        this.score = 0;
         foreach(Player player in players)
         {
             player.init(game,this);
@@ -47,7 +48,7 @@ public class TeamScript : MonoBehaviour
 
     public void setPossession(Game game)
     {
-        if(Game.offensiveTeam == this)
+        if(game.offensiveTeam == this)
         {
             teamState = TeamScript.TeamState.OFF;
         }else 
@@ -59,6 +60,15 @@ public class TeamScript : MonoBehaviour
     public void setGame(Game game)
     {
         this.game = game;
+    }
+
+    public void setScore(int score)
+    {
+        this.score = score;
+    }
+    public int getScore()
+    {
+        return this.score;
     }
 
     // Update is called once per frame

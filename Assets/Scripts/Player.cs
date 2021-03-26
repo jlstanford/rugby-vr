@@ -39,10 +39,28 @@ public void init(Game game, TeamScript team)
 
 void Update() 
 {
-   
-    heldObject = actionsCmps[0].heldObject;  //TODO: make it check left (actioncmps[0]) and right (actioncmps[1]) hands
-    isBallHolder = heldObject.GetComponent<Ball>().isBeingHeld;
-    updatePossession(playerTeam); 
+    foreach(VRGrab handCmp in actionsCmps)
+    {
+        if(handCmp.heldObject != null) this.heldObject = handCmp.heldObject;
+    }
+    Debug.Log(this.game.getBall().GetComponent<Ball>());
+    // if( //get child VRGrab scripts and see if HeldObject != null
+    //     //this.game.getBall().GetComponent<Ball>().isBeingHeld
+    //     )
+    // {
+    Debug.Log("GameBall is being Held!");
+    if(this.heldObject != null && this.heldObject.tag == "GameBall")
+    {
+        this.isBallHolder = true;
+        this.playerTeam.ballHolder = this;
+    } else 
+    {
+        Debug.Log(this);
+        Debug.Log(this.heldObject);
+        }
+    // }
+  
+
 }
 
 public void setGame(Game game)

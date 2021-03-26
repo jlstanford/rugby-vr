@@ -12,14 +12,18 @@ public class Game : MonoBehaviour
         TeamCarnival
     }
 
-    private int hondaScore;
-    private int carnivalScore;
-    public static TeamScript offensiveTeam;
-    public static TeamScript defensiveTeam;
+    // private int hondaScore;
+    // private int carnivalScore;
+    public int[] scores;
+    public Player ballHolder;
+    public TeamScript offensiveTeam;
+    public TeamScript defensiveTeam;
     public GameObject ball;
     private GameStyle gameStyle;
+public TeamScript playerTeam;
+public TeamScript enemyTeam;
 
-    public GameController controller;
+    // public GameController controller;
 
     [System.Serializable]
     public enum GameStyle
@@ -32,19 +36,38 @@ public class Game : MonoBehaviour
     {
     
         this.gameStyle = GameStyle.SEVENS;
+       this. scores = new int[2];
         
         TeamScript[] teams = GetComponentsInChildren<TeamScript>();
         // Team[] teams1 = [offensiveTeam,defensiveTeam];
+        // setScores();
         coinFlip(teams);
 
+        // TeamScript playerTeam;
+        // TeamScript enemyTeam;
 
         foreach(TeamScript ts in teams)
         {
             ts.init(this);
             // ts.setGame(this);
             // ts.setPossession(this);
+            //if team array has the XRRig player
+            foreach(Player player in ts.players){
+                Debug.Log(player);
+
+                Debug.Log(player.ToString());
+            }
+            Debug.Log(Array.Exists(ts.players,element => element.ToString().Contains("XRRig")) );
+            if(Array.Exists(ts.players,element => element.ToString().Contains("XRRig")) == true)
+            {
+                this.playerTeam = ts;
+            } else if(Array.Exists(ts.players,element => element.ToString().Contains("XRRig")) == false ){ this.enemyTeam = ts;}
             Debug.Log(ts);
+            
         }
+        Debug.Log(playerTeam);
+        Debug.Log(enemyTeam);
+        setScores(playerTeam,enemyTeam);
         
     }
 
@@ -57,6 +80,30 @@ public class Game : MonoBehaviour
     public GameObject getBall()
     { 
         return this.ball;
+    }
+
+    public Player getBallHolder()
+    {
+        return ballHolder;
+    }
+
+    public void setBallHolder(Player player)
+    {
+        ballHolder = player;
+    }
+
+    //playerTeam is always the first(zero) index
+    public void setScores(TeamScript playerTeam, TeamScript opposingTeam)
+    {
+        int playerTeamScore = playerTeam.getScore();
+        int opposingTeamScore = enemyTeam.getScore();
+        this.scores[0] = playerTeamScore;
+        this.scores[1] = opposingTeamScore;
+    }
+
+    public int[] getScores()
+    {
+        return scores;
     }
 
     // public TeamScript.TeamState getPossessionFor(TeamScript team)
