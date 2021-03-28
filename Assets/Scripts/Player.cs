@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public VRGrab[] actionsCmps;
     public bool isBallHolder;
     public Vector3 position;
-
+    public float chaseDistance;
     public GameObject heldObject;
 
     // Start is called before the first frame update
@@ -32,6 +32,7 @@ public void init(Game game, TeamScript team)
     setGame(game);
     setTeam(team);
     ball = game.ball;
+    chaseDistance = 5f;
     // playerState = PlayerState.STAGGERED;
 
 }
@@ -86,11 +87,17 @@ public virtual void updatePlayerState(TeamScript team)
         
     } else { playerState = PlayerState.FLAT; }
     //player should be chasing object(player or ball)if ball is nearby(held or on ground)
-    if(Vector3.Distance(game.ballHolder.position,position) < 5f && this.game.ballHolder.playerTeam != team)
-    {
+    if(game.ballHolder != null){
+        if(Vector3.Distance(game.ballHolder.position,position) < 5f && this.game.ballHolder.playerTeam != team)
+        {
+            playerState = PlayerState.CHASING;
+        }
+    }
+    Debug.Log("distance from ball to player: "+Vector3.Distance(game.ball.GetComponent<Ball>().position,position) );
+    
+    if(game.ballHolder == null && Vector3.Distance(game.ball.GetComponent<Ball>().position,position) < chaseDistance){ 
         playerState = PlayerState.CHASING;
-    }else if(game.ballHolder == null && Vector3.Distance(game.ball.GetComponent<Ball>().position,position) < 5f){ 
-        playerState = PlayerState.CHASING;
+
     } 
 }
 

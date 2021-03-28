@@ -38,6 +38,8 @@ public class Game : MonoBehaviour
         this.gameStyle = GameStyle.SEVENS;
         this.scores = new int[2];
         TeamScript[] teams = GetComponentsInChildren<TeamScript>();
+        Ball ballScript = GetComponentInChildren<Ball>();
+        ballScript.init(this);
         coinFlip(teams);
         foreach(TeamScript ts in teams)
         {
