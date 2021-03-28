@@ -11,19 +11,19 @@ public class Ball : GrabbableObjectVR
     
     public void init(Game game)
     {
-        position = GetComponent<Transform>().position;
+        
         this.game = game;
     }
     // Start is called before the first frame update
     void Start()
     {
-
+        position = GetComponent<Transform>().position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        position = GetComponent<Transform>().position;
     }
 
     public override void OnInteraction()

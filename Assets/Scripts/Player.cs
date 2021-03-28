@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public Vector3 position;
     public float chaseDistance;
     public GameObject heldObject;
+    public float distanceFromBall;
 
     // Start is called before the first frame update
 public virtual GameObject findBallInGame(Game game)
@@ -39,13 +40,15 @@ public void init(Game game, TeamScript team)
 
 void Update() 
 {
+    
+    position = GetComponent<Transform>().position;
     foreach(VRGrab handCmp in actionsCmps)
     {
         if(handCmp.heldObject != null) this.heldObject = handCmp.heldObject;
     }
     //test without headset
     // this.heldObject = this.game.getBall();
-    
+    distanceFromBall = Vector3.Distance(ball.GetComponent<Ball>().position,position);
     Debug.Log(this.game.getBall().GetComponent<Ball>());
     Debug.Log("GameBall is being Held!");
     if(this.heldObject != null && this.heldObject.tag == "GameBall")
