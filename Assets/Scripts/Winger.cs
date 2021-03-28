@@ -21,11 +21,11 @@ public class Winger :  Player
     // heldObject = actionsCmps[0].heldObject;  
     // isBallHolder = heldObject.GetComponent<Ball>().isBeingHeld;
     // updatePossession(playerTeam);
-        if(actionsCmps[0].heldObject)
-        {
-        heldObject = actionsCmps[0].heldObject;  //TODO: make it check left (actioncmps[0]) and right (actioncmps[1]) hands
-        isBallHolder = heldObject.GetComponent<Ball>().isBeingHeld;
-        updatePossession(playerTeam); 
-        }
+        // if(actionsCmps[0].heldObject)
+        // {
+        // heldObject = actionsCmps[0].heldObject;  //TODO: make it check left (actioncmps[0]) and right (actioncmps[1]) hands
+        // isBallHolder = heldObject.GetComponent<Ball>().isBeingHeld;
+        // updatePossession(playerTeam); 
+        // }
     }
 }

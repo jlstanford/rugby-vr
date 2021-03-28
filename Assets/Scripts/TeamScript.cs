@@ -66,9 +66,10 @@ public class TeamScript : MonoBehaviour
     {
         this.score = score;
     }
+
     public int getScore()
     {
-        return this.score;
+        return game.getScore(this);
     }
 
     // Update is called once per frame
@@ -77,31 +78,22 @@ public class TeamScript : MonoBehaviour
         
     }
 
-    // public void updatePossesionState(Game game)
-    // {
-    //     Debug.Log(game.defensiveTeam.ToString());
-    //     Debug.Log(game.offensiveTeam.ToString());
-    //     Debug.Log(this.ToString());
-    //     Debug.Log(game.defensiveTeam.ToString().Equals(this.ToString()));
-    //     Debug.Log(game.offensiveTeam.ToString().Equals(this.ToString()));
-    //     if(game.defensiveTeam.ToString().Equals(this.team.ToString()) )
-    //     {
-    //         this.teamState = TeamScript.TeamState.DEF;
-    //     } else if( game.offensiveTeam.ToString().Equals(this.team.ToString()))
-    //     {
-    //         this.teamState = TeamScript.TeamState.OFF;
-    //     }
-    // }
+    public void updatePossessionState()
+    {
+    //     only ballHolders team will have ballHolder defined
+        if(this.ballHolder != null)
+        {
+           game.offensiveTeam = this;
+           teamState = TeamScript.TeamState.OFF;
+        }else if(this.ballHolder == null && game.ballHolder != null){
+           game.defensiveTeam = this;
+           teamState = TeamScript.TeamState.DEF;
+        }
+    }
 
-    // public void updateScore(int newScore)
-    // {
-    //     this.score = newScore;
+    public void updateScore(int newScore)
+    {
+        this.score = newScore;
 
-    // }
-
-    // public int getScore()
-    // {
-    //     return game.getScore();
-
-    // }
+    }
 }

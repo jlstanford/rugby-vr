@@ -20,8 +20,8 @@ public class Game : MonoBehaviour
     public TeamScript defensiveTeam;
     public GameObject ball;
     private GameStyle gameStyle;
-public TeamScript playerTeam;
-public TeamScript enemyTeam;
+    public TeamScript playerTeam;
+    public TeamScript enemyTeam;
 
     // public GameController controller;
 
@@ -36,28 +36,18 @@ public TeamScript enemyTeam;
     {
     
         this.gameStyle = GameStyle.SEVENS;
-       this. scores = new int[2];
-        
+        this.scores = new int[2];
         TeamScript[] teams = GetComponentsInChildren<TeamScript>();
-        // Team[] teams1 = [offensiveTeam,defensiveTeam];
-        // setScores();
         coinFlip(teams);
-
-        // TeamScript playerTeam;
-        // TeamScript enemyTeam;
-
         foreach(TeamScript ts in teams)
         {
             ts.init(this);
-            // ts.setGame(this);
-            // ts.setPossession(this);
+           
+            // foreach(Player player in ts.players){
+            //     Debug.Log(player);
+            //     Debug.Log(player.ToString());
+            // }
             //if team array has the XRRig player
-            foreach(Player player in ts.players){
-                Debug.Log(player);
-
-                Debug.Log(player.ToString());
-            }
-            Debug.Log(Array.Exists(ts.players,element => element.ToString().Contains("XRRig")) );
             if(Array.Exists(ts.players,element => element.ToString().Contains("XRRig")) == true)
             {
                 this.playerTeam = ts;
@@ -68,13 +58,17 @@ public TeamScript enemyTeam;
         Debug.Log(playerTeam);
         Debug.Log(enemyTeam);
         setScores(playerTeam,enemyTeam);
+     
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+         foreach(TeamScript ts in GetComponentsInChildren<TeamScript>())
+         {
+            if(ts.ballHolder != null) this.ballHolder = ts.ballHolder;
+         }
     }
 
     public GameObject getBall()
@@ -104,6 +98,17 @@ public TeamScript enemyTeam;
     public int[] getScores()
     {
         return scores;
+    }
+
+    public int getScore(TeamScript team)
+    {
+        int score = 0;
+        if(team.ToString() == playerTeam.ToString() ){
+            score = scores[0];
+        } else if(team.ToString() == enemyTeam.ToString()){
+            score = scores[1];
+        } 
+        return score;
     }
 
     // public TeamScript.TeamState getPossessionFor(TeamScript team)

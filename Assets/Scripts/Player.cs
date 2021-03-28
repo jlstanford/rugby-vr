@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public VRJoystickMovement simpleCharacterController;
     public VRGrab[] actionsCmps;
     public bool isBallHolder;
+    public Vector3 position;
 
     public GameObject heldObject;
 
@@ -31,8 +32,6 @@ public void init(Game game, TeamScript team)
     setGame(game);
     setTeam(team);
     ball = game.ball;
-    updatePossession(team);
-    
     // playerState = PlayerState.STAGGERED;
 
 }
@@ -43,24 +42,25 @@ void Update()
     {
         if(handCmp.heldObject != null) this.heldObject = handCmp.heldObject;
     }
+    //test without headset
+    // this.heldObject = this.game.getBall();
+    
     Debug.Log(this.game.getBall().GetComponent<Ball>());
-    // if( //get child VRGrab scripts and see if HeldObject != null
-    //     //this.game.getBall().GetComponent<Ball>().isBeingHeld
-    //     )
-    // {
     Debug.Log("GameBall is being Held!");
     if(this.heldObject != null && this.heldObject.tag == "GameBall")
     {
         this.isBallHolder = true;
         this.playerTeam.ballHolder = this;
-    } else 
+        updatePlayerState(this.playerTeam); 
+    }
+     else 
     {
         Debug.Log(this);
         Debug.Log(this.heldObject);
-        }
-    // }
-  
-
+    }
+    playerTeam.updatePossessionState();
+    updatePlayerState(this.playerTeam);
+    
 }
 
 public void setGame(Game game)
@@ -73,26 +73,30 @@ public void setTeam(TeamScript team)
     this.playerTeam = team;
 }
 
-public virtual void updatePossession(TeamScript team)
+public virtual void updatePlayerState(TeamScript team)
 {
-    
-    // //set playerState
-
     if(team.teamState == TeamScript.TeamState.OFF){
-        if(ball.GetComponent<Ball>().isBeingHeld == false)
+        if(isBallHolder == false)
         {
-         playerState = PlayerState.STAGGERED;
+            playerState = PlayerState.STAGGERED;
         }else
         {
             playerState = PlayerState.BALL_CARRYING;
         }
         
     } else { playerState = PlayerState.FLAT; }
+    //player should be chasing object(player or ball)if ball is nearby(held or on ground)
+    if(Vector3.Distance(game.ballHolder.position,position) < 5f && this.game.ballHolder.playerTeam != team)
+    {
+        playerState = PlayerState.CHASING;
+    }else if(game.ballHolder == null && Vector3.Distance(game.ball.GetComponent<Ball>().position,position) < 5f){ 
+        playerState = PlayerState.CHASING;
+    } 
 }
 
 public virtual void scoreTry()
 {
-    //  playerTeam.updateScore( playerTeam.getScore() + 5 );
+     playerTeam.updateScore( playerTeam.getScore() + 5 );
 }
 void pass(Ball ball){}
 
