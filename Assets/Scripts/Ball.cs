@@ -7,6 +7,7 @@ public class Ball : GrabbableObjectVR
     public Transform location;
     public Vector3 position;
     public bool isBeingPassed;
+    public bool isOnGround;
     public Game game;
     
     public void init(Game game)
@@ -19,12 +20,17 @@ public class Ball : GrabbableObjectVR
     {
         position = GetComponent<Transform>().position;
         isBeingPassed = false;
+        isOnGround = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         position = GetComponent<Transform>().position;
+        if(position.y <= 0 )
+        {
+            isOnGround =true;
+        }
     }
 
     public override void OnInteraction()

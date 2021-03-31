@@ -67,6 +67,9 @@ void Update()
     }
     playerTeam.updatePossessionState();
     updatePlayerState(this.playerTeam);
+    //AI Stuff
+if(TryGetComponent<AIActions>(out AIActions aiActions))
+{
     nearestEnemy = getNearestEnemy();
     distanceFromNearestEnemy =  Vector3.Distance(position, nearestEnemy.position);
     if(isBallHolder){ //TODO: change to a while
@@ -75,12 +78,14 @@ void Update()
         if(distanceFromNearestEnemy < 20 )
         {
             Debug.Log("AI Pass");
-            GetComponent<AIActions>().doPassDecision();  
+            aiActions.doPassDecision();  
         }
-    }else if(isBallHolder == false && playerState == PlayerState.CHASING)
+    }else if(isBallHolder == false && playerState == PlayerState.CHASING )
     {
-        GetComponent<AIActions>().runToward(game.ball)
+        aiActions.runToward(game.ball); //make this trygetcomponent for xrrig or (better) refactor so only ais do this
     }
+}
+   
 }
 
 public void setGame(Game game)
@@ -110,14 +115,14 @@ public virtual void updatePlayerState(TeamScript team)
     }
     //player should be chasing object(player or ball)if ball is nearby(held or on ground)
     if(game.ballHolder != null){
-        if(Vector3.Distance(game.ballHolder.position,position) < 5f && this.game.ballHolder.playerTeam != team)
+        if(Vector3.Distance(game.ballHolder.position,position) < chaseDistance ) //&& this.game.ballHolder.playerTeam != team
         {
             playerState = PlayerState.CHASING;
         }
     }
     // Debug.Log("distance from ball to player: "+Vector3.Distance(game.ball.GetComponent<Ball>().position,position) );
     
-    if(game.ballHolder == null && Vector3.Distance(game.ball.GetComponent<Ball>().position,position) < chaseDistance){ 
+    if(game.ballHolder == null && Vector3.Distance(game.ball.GetComponent<Ball>().position,position) < chaseDistance && ball.GetComponent<Ball>().isOnGround  && ball.GetComponent<Ball>().isBeingPassed == false){ 
         playerState = PlayerState.CHASING;
     } 
 }
