@@ -77,7 +77,7 @@ public class TeamScript : MonoBehaviour
 
     public int getScore()
     {
-        return game.getScore(this);
+        return game.getScoreFor(this);
     }
 
     // Update is called once per frame
@@ -102,6 +102,6 @@ public class TeamScript : MonoBehaviour
     public void updateScore(int newScore)
     {
         this.score = newScore;
-
+        this.game.updateScoreFor(this);
     }
 }

@@ -48,9 +48,29 @@ public class AIActions : ActionsScript
             StartCoroutine("getUpTimer");
         } else if(collidingObject.tag == "GameBall" && collidingObject.GetComponent<Ball>().isBeingPassed) {
             attemptToCatch(collidingObject);
+        } else if(collidingObject.tag == "TryZone" )
+        {
+            Debug.Log("You got to the tryzone!");
+            if(GetComponent<Player>().isBallHolder )
+            {
+                GetComponent<Player>().touchDown();
+            }
+            //game.updateScores();
         }
         
     }
+
+    // public void OnCollisionEnter(Collision other) {
+    //     if(other.GameObject.tag == "TryZone" )
+    //     {
+    //         Debug.Log("You got to the tryzone!");
+    //         if(GetComponent<Player>().isBallHolder )
+    //         {
+    //             GetComponent<Player>().touchDown();
+    //         }
+    //         //game.updateScores();
+    //     }
+    // }
 
     private IEnumerator getUpTimer()
     {

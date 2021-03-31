@@ -105,7 +105,7 @@ public class Game : MonoBehaviour
         return scores;
     }
 
-    public int getScore(TeamScript team)
+    public int getScoreFor(TeamScript team)
     {
         int score = 0;
         if(team.ToString() == playerTeam.ToString() ){
@@ -163,9 +163,14 @@ public class Game : MonoBehaviour
         }
     }
 
-    public void updateScores()
+    public void updateScoreFor(TeamScript team)
     {
-
+        if(team == playerTeam)
+        {
+            scores[0] = team.score;
+        } else {scores[1] = team.score;}
+        //scores[0] = team.score
+        // setScores(team,enemyTeam);
     }
 
     

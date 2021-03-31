@@ -80,9 +80,12 @@ if(TryGetComponent<AIActions>(out AIActions aiActions))
             Debug.Log("AI Pass");
             aiActions.doPassDecision();  
         }
-    }else if(isBallHolder == false && playerState == PlayerState.CHASING )
+    }else if(isBallHolder == false && playerState == PlayerState.CHASING && game.ballHolder == true )
     {
-        aiActions.runToward(game.ball); //make this trygetcomponent for xrrig or (better) refactor so only ais do this
+        if(game.ballHolder.playerTeam != this.playerTeam)
+        {
+            aiActions.runToward(game.ball); //make this trygetcomponent for xrrig or (better) refactor so only ais do this
+        }
     }
 }
    
@@ -115,7 +118,7 @@ public virtual void updatePlayerState(TeamScript team)
     }
     //player should be chasing object(player or ball)if ball is nearby(held or on ground)
     if(game.ballHolder != null){
-        if(Vector3.Distance(game.ballHolder.position,position) < chaseDistance ) //&& this.game.ballHolder.playerTeam != team
+        if(Vector3.Distance(game.ballHolder.position,position) < chaseDistance && isBallHolder == false) //&& this.game.ballHolder.playerTeam != team
         {
             playerState = PlayerState.CHASING;
         }
@@ -127,9 +130,16 @@ public virtual void updatePlayerState(TeamScript team)
     } 
 }
 
-public void scoreTry()
+public void touchDown()
 {
-     playerTeam.updateScore( playerTeam.getScore() + 5 );
+    //stop running
+    //score
+    Debug.Log("You scored!!!");
+    playerState = PlayerState.STAGGERED;
+    playerTeam.teamState = TeamScript.TeamState.OFF;
+    drop(ball.GetComponent<Ball>());
+    playerTeam.updateScore( playerTeam.getScore() + 5 );
+    
 }
 
 public Player getNearestEnemy()

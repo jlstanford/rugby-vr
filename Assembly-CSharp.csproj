@@ -46,6 +46,11 @@
      <Compile Include="Assets\SampleScenes\Scripts\ParticleSceneControls.cs" />
      <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
      <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
+     <Compile Include="Assets\Scripts\AIActions.cs" />
+     <Compile Include="Assets\Scripts\AIMovementController.cs" />
+     <Compile Include="Assets\Scripts\AIPlayer.cs" />
+     <Compile Include="Assets\Scripts\AIWinger.cs" />
+     <Compile Include="Assets\Scripts\ActionsScript.cs" />
      <Compile Include="Assets\Scripts\Ball.cs" />
      <Compile Include="Assets\Scripts\CameraMovementScript.cs" />
      <Compile Include="Assets\Scripts\Cannon.cs" />
@@ -70,6 +75,7 @@
      <Compile Include="Assets\Scripts\VRHandAnimator.cs" />
      <Compile Include="Assets\Scripts\VRInput.cs" />
      <Compile Include="Assets\Scripts\VRJoystickMovement.cs" />
+     <Compile Include="Assets\Scripts\VRPlayer.cs" />
      <Compile Include="Assets\Scripts\Winger.cs" />
      <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
      <None Include="Assets\VRWaterShader2\Readme.txt" />

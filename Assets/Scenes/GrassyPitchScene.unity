@@ -1844,6 +1844,7 @@ MonoBehaviour:
   location: {fileID: 0}
   position: {x: 0, y: 0, z: 0}
   isBeingPassed: 0
+  isOnGround: 0
   game: {fileID: 0}
 --- !u!1001 &511514142
 PrefabInstance:
@@ -3301,9 +3302,10 @@ GameObject:
   m_Component:
   - component: {fileID: 951529150}
   - component: {fileID: 951529149}
+  - component: {fileID: 951529151}
   m_Layer: 0
   m_Name: TryZoneA
-  m_TagString: Untagged
+  m_TagString: TryZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3319,8 +3321,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 198.60799, y: 1, z: 109.49939}
-  m_Center: {x: -8.175155, y: 0, z: 59.072876}
+  m_Size: {x: 198.60797, y: 1.3501369, z: 117.84172}
+  m_Center: {x: -8.17515, y: 0.5057543, z: 63.24404}
 --- !u!4 &951529150
 Transform:
   m_ObjectHideFlags: 0
@@ -3336,6 +3338,22 @@ Transform:
   m_Father: {fileID: 1462708269}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &951529151
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951529148}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1002951298
 GameObject:
   m_ObjectHideFlags: 0
@@ -3888,9 +3906,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1292996021}
   - component: {fileID: 1292996020}
+  - component: {fileID: 1292996022}
   m_Layer: 0
   m_Name: TryZoneB
-  m_TagString: Untagged
+  m_TagString: TryZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3906,8 +3925,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0104418, y: 1, z: 0.46241}
-  m_Center: {x: 0.005220886, y: 0, z: 0.268795}
+  m_Size: {x: 1.0574325, y: 1, z: 0.897718}
+  m_Center: {x: 0.016350817, y: 0, z: 0.2923022}
 --- !u!4 &1292996021
 Transform:
   m_ObjectHideFlags: 0
@@ -3923,6 +3942,22 @@ Transform:
   m_Father: {fileID: 1462708269}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1292996022
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292996019}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1299908831
 GameObject:
   m_ObjectHideFlags: 0
@@ -7563,6 +7598,7 @@ MonoBehaviour:
   location: {fileID: 0}
   position: {x: 0, y: 0, z: 0}
   isBeingPassed: 0
+  isOnGround: 0
   game: {fileID: 0}
 --- !u!1001 &4782524602127675720
 PrefabInstance:
