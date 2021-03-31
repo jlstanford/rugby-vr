@@ -39,7 +39,7 @@ public void init(Game game, TeamScript team)
     // this.tag = $"{playerTeam}Player";
     // TODO: refactor so players have teamName in their tags. Will help with game.getEnemiesFor()
     ball = game.ball;
-    chaseDistance = 5f;
+    chaseDistance = 30;
     // enemies = getEnemies();
     // playerState = PlayerState.STAGGERED;
 
@@ -170,7 +170,7 @@ public virtual void tackle(Player playerBeingTackled){
 public void drop(Ball ball){
     // isBallHolder = false;
     ball.isBeingHeld = false;
-    ball.transform.position= new Vector3(GetComponent<Player>().position.x,0,GetComponent<Player>().position.z);
+    ball.transform.position= new Vector3(GetComponent<Player>().position.x,0,GetComponent<Player>().position.z+10);// 10 for the bounce offset so it falls away fom player
     ball.transform.SetParent(GetComponent<AIPlayer>().game.transform); 
     // ball = null;
     // this.ball = null;
