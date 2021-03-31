@@ -13,6 +13,7 @@ public class TeamScript : MonoBehaviour
     public Player[] players;
     public Player ballHolder;
     public Game game;
+    public GameObject tryZone;
     // public TeamScript team;
     public TeamState teamState;
     [System.Serializable]
@@ -21,7 +22,8 @@ public class TeamScript : MonoBehaviour
         DEF,
         OFF,
         SCRUMMING,
-        LINED_UP
+        LINED_UP,
+        BALLS_OUT
     }
 
     // Start is called before the first frame update
@@ -33,12 +35,18 @@ public class TeamScript : MonoBehaviour
 
     public void init(Game game) 
     {
+        Debug.Log("ts"+this);
         var thisTeam = this.ToString();
         setGame(game);
         setPossession(game);
         this.score = 0;
+        if(teamState == TeamState.OFF)
+        {
+            tryZone = game.tryZoneA;
+        } else { tryZone = game.tryZoneB; }
         foreach(Player player in players)
         {
+            Debug.Log("TS"+player);
             player.init(game,this);
             // player.setTeam(this);
             // player.setGame(game);

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VRJoystickMovement : MonoBehaviour
+public class VRJoystickMovement : MovementScript
 {
     private VRInput controller;
     private Camera playerCam;
-    public Vector3 position;
-    public Transform location;
-    public float moveSpeed;
+    // public Vector3 position;
+    // public Transform location;
+    // public float moveSpeed;
     // public float turnSpeed;
 
     void Awake()

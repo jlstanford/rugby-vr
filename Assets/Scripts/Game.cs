@@ -20,8 +20,11 @@ public class Game : MonoBehaviour
     public TeamScript defensiveTeam;
     public GameObject ball;
     private GameStyle gameStyle;
-    public TeamScript playerTeam;
-    public TeamScript enemyTeam;
+    public GameObject tryZoneA;
+    public GameObject tryZoneB;
+    public TeamScript playerTeam;  
+    public TeamScript enemyTeam;  
+    // public TeamScript[] teams;
 
     // public GameController controller;
 
@@ -111,6 +114,15 @@ public class Game : MonoBehaviour
             score = scores[1];
         } 
         return score;
+    }
+
+    public Player[] getEnemiesFor(Player player)
+    {
+        var pTeam = player.playerTeam;
+        if(pTeam = this.playerTeam)
+        {
+            return enemyTeam.players;
+        } else { return playerTeam.players; }
     }
 
     // public TeamScript.TeamState getPossessionFor(TeamScript team)

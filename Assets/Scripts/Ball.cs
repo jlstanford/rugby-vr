@@ -6,7 +6,7 @@ public class Ball : GrabbableObjectVR
 {
     public Transform location;
     public Vector3 position;
-
+    public bool isBeingPassed;
     public Game game;
     
     public void init(Game game)
@@ -18,6 +18,7 @@ public class Ball : GrabbableObjectVR
     void Start()
     {
         position = GetComponent<Transform>().position;
+        isBeingPassed = false;
     }
 
     // Update is called once per frame

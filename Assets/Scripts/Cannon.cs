@@ -54,6 +54,7 @@ public class Cannon : MonoBehaviour
 
         ball.GetComponent<Rigidbody>().transform.position = transform.position;
         ball.GetComponent<Rigidbody>().velocity = velocity;
+        ball.GetComponent<Ball>().isBeingPassed = true;
        
     }
 
