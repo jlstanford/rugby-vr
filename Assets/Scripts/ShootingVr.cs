@@ -14,7 +14,7 @@ public class ShootingVr : GrabbableObjectVR
         
     }
 
-    public override void OnInteraction() 
+    public override void OnInteractionStarted() 
     {
         Instantiate(pelletPreFab,spawnPoint.position,spawnPoint.rotation);
     }

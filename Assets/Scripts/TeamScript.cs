@@ -35,7 +35,8 @@ public class TeamScript : MonoBehaviour
 
     public void init(Game game) 
     {
-        Debug.Log("ts"+this);
+        this.transform.position = new Vector3(this.transform.position.x,0,this.transform.position.z);
+        Debug.Log("ts "+this);
         var thisTeam = this.ToString();
         setGame(game);
         setPossession(game);
@@ -43,7 +44,10 @@ public class TeamScript : MonoBehaviour
         if(teamState == TeamState.OFF)
         {
             tryZone = game.tryZoneA;
-        } else { tryZone = game.tryZoneB; }
+            // this.transform.position = new Vector3(this.transform.position.x,0,565f);
+        } else { tryZone = game.tryZoneB; 
+            // this.transform.position = new Vector3(this.transform.position.x,0,495f);
+            }
         foreach(Player player in players)
         {
             Debug.Log("TS"+player);
@@ -52,6 +56,11 @@ public class TeamScript : MonoBehaviour
             // player.setGame(game);
             Debug.Log(player);
         }
+    }
+
+    public Player[] getPlayers()
+    {
+        return players;
     }
 
     public void setPossession(Game game)

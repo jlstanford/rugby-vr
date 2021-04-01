@@ -37,7 +37,7 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-    
+        this.transform.position = new Vector3(this.transform.position.x,0,this.transform.position.z);
         this.gameStyle = GameStyle.SEVENS;
         this.scores = new int[2];
         TeamScript[] teams = GetComponentsInChildren<TeamScript>();
@@ -47,11 +47,7 @@ public class Game : MonoBehaviour
         foreach(TeamScript ts in teams)
         {
             ts.init(this);
-           
-            // foreach(Player player in ts.players){
-            //     Debug.Log(player);
-            //     Debug.Log(player.ToString());
-            // }
+            
             //if team array has the XRRig player
             if(Array.Exists(ts.players,element => element.ToString().Contains("XRRig")) == true)
             {
@@ -119,25 +115,11 @@ public class Game : MonoBehaviour
     public Player[] getEnemiesFor(Player player)
     {
         var pTeam = player.playerTeam;
-        if(pTeam = this.playerTeam)
+        if(pTeam == this.playerTeam)
         {
             return enemyTeam.players;
         } else { return playerTeam.players; }
     }
-
-    // public TeamScript.TeamState getPossessionFor(TeamScript team)
-    // {
-       
-    //     TeamScript.TeamState possession = TeamScript.TeamState.LINED_UP;
-    //     if(offensiveTeam == team)
-    //     {
-    //         possession = TeamScript.TeamState.OFF;
-    //     }else 
-    //     {
-    //         possession = TeamScript.TeamState.DEF;
-    //     }
-    //     return possession;
-    // }
 
     public void setOffense(TeamScript team)
     {

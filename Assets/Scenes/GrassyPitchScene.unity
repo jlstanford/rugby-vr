@@ -325,6 +325,9 @@ MonoBehaviour:
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
   nearestEnemy: {fileID: 0}
+  nearestTeammate: {fileID: 0}
+  enemies: []
+  teammates: []
   isBallHolder: 0
   position: {x: 0, y: 0, z: 0}
   chaseDistance: 0
@@ -839,7 +842,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 256456912}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 66.190735, y: -11.535971, z: 76.43585}
+  m_LocalPosition: {x: -150.27, y: -11.535971, z: 76.43585}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 88039633}
@@ -2094,6 +2097,80 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 573998603}
   m_Enabled: 1
+--- !u!1001 &596767469
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7597795515371705140, guid: f78b1ddd408f7664a99664ba124dac5c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7597795515371705140, guid: f78b1ddd408f7664a99664ba124dac5c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 547.28613
+      objectReference: {fileID: 0}
+    - target: {fileID: 7597795515371705140, guid: f78b1ddd408f7664a99664ba124dac5c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7597795515371705140, guid: f78b1ddd408f7664a99664ba124dac5c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 565
+      objectReference: {fileID: 0}
+    - target: {fileID: 7597795515371705140, guid: f78b1ddd408f7664a99664ba124dac5c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9870447
+      objectReference: {fileID: 0}
+    - target: {fileID: 7597795515371705140, guid: f78b1ddd408f7664a99664ba124dac5c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7597795515371705140, guid: f78b1ddd408f7664a99664ba124dac5c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.16044584
+      objectReference: {fileID: 0}
+    - target: {fileID: 7597795515371705140, guid: f78b1ddd408f7664a99664ba124dac5c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7597795515371705140, guid: f78b1ddd408f7664a99664ba124dac5c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7597795515371705140, guid: f78b1ddd408f7664a99664ba124dac5c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 18.466002
+      objectReference: {fileID: 0}
+    - target: {fileID: 7597795515371705140, guid: f78b1ddd408f7664a99664ba124dac5c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7597795515371705147, guid: f78b1ddd408f7664a99664ba124dac5c,
+        type: 3}
+      propertyPath: m_Name
+      value: Flashlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 7597795515371705147, guid: f78b1ddd408f7664a99664ba124dac5c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f78b1ddd408f7664a99664ba124dac5c, type: 3}
 --- !u!1001 &597899163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2426,7 +2503,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 3ceeebbac07ec7c4cbb991403d90cfad,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3ceeebbac07ec7c4cbb991403d90cfad,
         type: 3}
@@ -3305,7 +3382,7 @@ GameObject:
   - component: {fileID: 951529151}
   m_Layer: 0
   m_Name: TryZoneA
-  m_TagString: TryZone
+  m_TagString: TryZoneA
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3321,8 +3398,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 198.60797, y: 1.3501369, z: 117.84172}
-  m_Center: {x: -8.17515, y: 0.5057543, z: 63.24404}
+  m_Size: {x: 198.60797, y: 1.5090978, z: 117.84172}
+  m_Center: {x: -8.17515, y: 0.42627326, z: 63.24404}
 --- !u!4 &951529150
 Transform:
   m_ObjectHideFlags: 0
@@ -3331,7 +3408,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 951529148}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.407349, y: -20, z: -93.361725}
+  m_LocalPosition: {x: 14.407349, y: 0, z: -93.361725}
   m_LocalScale: {x: 3.1625, y: 111.81315, z: 1}
   m_Children:
   - {fileID: 1280798026}
@@ -3768,6 +3845,9 @@ MonoBehaviour:
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
   nearestEnemy: {fileID: 0}
+  nearestTeammate: {fileID: 0}
+  enemies: []
+  teammates: []
   isBallHolder: 0
   position: {x: 0, y: 0, z: 0}
   chaseDistance: 0
@@ -3795,6 +3875,9 @@ MonoBehaviour:
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
   nearestEnemy: {fileID: 0}
+  nearestTeammate: {fileID: 0}
+  enemies: []
+  teammates: []
   isBallHolder: 0
   position: {x: 0, y: 0, z: 0}
   chaseDistance: 0
@@ -3909,7 +3992,7 @@ GameObject:
   - component: {fileID: 1292996022}
   m_Layer: 0
   m_Name: TryZoneB
-  m_TagString: TryZone
+  m_TagString: TryZoneB
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3935,7 +4018,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1292996019}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.7313843, y: -20, z: 639.78625}
+  m_LocalPosition: {x: -4.7313843, y: 0, z: 639.78625}
   m_LocalScale: {x: 607.15, y: 149.02965, z: 163.14682}
   m_Children:
   - {fileID: 4782524602127675723}
@@ -4076,7 +4159,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 93d2b00e12988aa4e957ba1440e8c3f9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.4
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 93d2b00e12988aa4e957ba1440e8c3f9,
         type: 3}
@@ -4549,7 +4632,7 @@ Transform:
   - {fileID: 1248811865}
   - {fileID: 2135617075}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1461062197
 PrefabInstance:
@@ -4732,7 +4815,7 @@ Transform:
   - {fileID: 951529150}
   - {fileID: 1292996021}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1462708270
 MonoBehaviour:
@@ -4850,6 +4933,9 @@ MonoBehaviour:
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
   nearestEnemy: {fileID: 0}
+  nearestTeammate: {fileID: 0}
+  enemies: []
+  teammates: []
   isBallHolder: 0
   position: {x: 0, y: 0, z: 0}
   chaseDistance: 0
@@ -5043,7 +5129,7 @@ PrefabInstance:
     - target: {fileID: 4324904055579858554, guid: cf3f63826e612a241b81731a89313752,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.092117965
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4324904055579858554, guid: cf3f63826e612a241b81731a89313752,
         type: 3}
@@ -5603,34 +5689,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1832947711}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1832947715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1832947712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78de6edb8afa5b84a955f569ed6280c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  throwForce: 0
-  moveSpeed: 0
-  playerState: 0
-  playerTeam: {fileID: 0}
-  game: {fileID: 0}
-  ball: {fileID: 0}
-  simpleCharacterController: {fileID: 0}
-  actionsCmps: []
-  nearestEnemy: {fileID: 0}
-  isBallHolder: 0
-  position: {x: 0, y: 0, z: 0}
-  chaseDistance: 0
-  distanceFromNearestEnemy: 0
-  heldObject: {fileID: 0}
-  distanceFromBall: 0
-  passReciever: {fileID: 0}
 --- !u!114 &1832947716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5675,6 +5733,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1832947719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832947712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bfbbf28d107fba448ca315fe797efa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throwForce: 0
+  moveSpeed: 0
+  playerState: 0
+  playerTeam: {fileID: 0}
+  game: {fileID: 0}
+  ball: {fileID: 0}
+  simpleCharacterController: {fileID: 0}
+  actionsCmps: []
+  nearestEnemy: {fileID: 0}
+  nearestTeammate: {fileID: 0}
+  enemies: []
+  teammates: []
+  isBallHolder: 0
+  position: {x: 0, y: 0, z: 0}
+  chaseDistance: 0
+  distanceFromNearestEnemy: 0
+  heldObject: {fileID: 0}
+  distanceFromBall: 0
+  passReciever: {fileID: 0}
 --- !u!1001 &1843020683
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6096,7 +6185,7 @@ PrefabInstance:
     - target: {fileID: 6151595956035297317, guid: 2bd47969f7ccf79409cece449bf05fc5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6151595956035297317, guid: 2bd47969f7ccf79409cece449bf05fc5,
         type: 3}
@@ -6845,7 +6934,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981729508}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 66.190735, y: -11.535971, z: 76.43585}
+  m_LocalPosition: {x: -73.4, y: -11.535971, z: 76.43585}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1468401136}
@@ -6868,7 +6957,7 @@ MonoBehaviour:
   score: 0
   players:
   - {fileID: 1468401139}
-  - {fileID: 1832947715}
+  - {fileID: 1832947719}
   ballHolder: {fileID: 0}
   game: {fileID: 1462708270}
   tryZone: {fileID: 0}
@@ -7044,12 +7133,12 @@ PrefabInstance:
     - target: {fileID: 998932563966266061, guid: f625824d7ac55cf4db48938cf568c45d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1140815620788667505, guid: f625824d7ac55cf4db48938cf568c45d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2865454498081539197, guid: f625824d7ac55cf4db48938cf568c45d,
         type: 3}
@@ -7064,7 +7153,7 @@ PrefabInstance:
     - target: {fileID: 5466836254858695456, guid: f625824d7ac55cf4db48938cf568c45d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5967985820236419841, guid: f625824d7ac55cf4db48938cf568c45d,
         type: 3}
@@ -7216,6 +7305,9 @@ MonoBehaviour:
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
   nearestEnemy: {fileID: 0}
+  nearestTeammate: {fileID: 0}
+  enemies: []
+  teammates: []
   isBallHolder: 0
   position: {x: 0, y: 0, z: 0}
   chaseDistance: 0
@@ -7372,7 +7464,7 @@ PrefabInstance:
     - target: {fileID: 2717412251678171120, guid: 0ef41a07b96e90e4287e250449f0af56,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2717412251678171120, guid: 0ef41a07b96e90e4287e250449f0af56,
         type: 3}
@@ -7645,7 +7737,7 @@ PrefabInstance:
     - target: {fileID: 4324904055579858554, guid: cf3f63826e612a241b81731a89313752,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.16659856
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4324904055579858554, guid: cf3f63826e612a241b81731a89313752,
         type: 3}
@@ -7745,5 +7837,5 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 25.747002, y: -163.822, z: -20.695002}

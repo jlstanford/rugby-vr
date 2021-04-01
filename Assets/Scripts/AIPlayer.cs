@@ -65,9 +65,9 @@ public class AIPlayer : Player
         heldObject = ball;
         Debug.Log("Caught the Ball!");
         ball.transform.SetParent(this.transform);
-        ball.GetComponent<Transform>().position = position;
-        ball.GetComponent<Transform>().position = this.position;
+        // ball.GetComponent<Transform>().position = this.position;
         game.ball.transform.SetParent(this.transform);
+        ball.GetComponent<Transform>().position = new Vector3(this.position.x,1,this.position.z);
         // heldObject.GetComponent<Rigidbody>().isKinematic = true;
         ball.GetComponent<Ball>().isBeingPassed = false;
         ball.GetComponent<Ball>().isBeingHeld = true;

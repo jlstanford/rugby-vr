@@ -47,7 +47,9 @@ public class Cannon : MonoBehaviour
 
     private void FireCannonAtPoint()//Vector3 point
     {
-        var point = targetObject.transform.position;
+        // targetObject.transform.position
+        //GetComponent<Player>().nearestTeammate.transform.position
+        var point = GetComponent<Player>().playerTeam.teamState == TeamScript.TeamState.OFF ? GetComponent<Player>().nearestTeammate.transform.position: GetComponent<Player>().nearestEnemy.transform.position;
         var velocity = BallisticVelocity(point+destinationOffset, angle);
         velocity = velocity * passForce;
         Debug.Log("Firing at " + point + " velocity " + velocity);

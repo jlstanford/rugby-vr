@@ -9,7 +9,15 @@ public class GrabbableObjectVR : MonoBehaviour
     public Vector3 grabOffset;
 
     // Update is called once per frame
-    public virtual void OnInteraction()
+    public virtual void OnInteractionStarted()
+    {
+        
+    }
+    public virtual void OnInteractionUpdated()
+    {
+        
+    }
+    public virtual void OnInteractionEnded()
     {
         
     }

@@ -14,7 +14,9 @@ public class Player : MonoBehaviour
     public MovementScript simpleCharacterController;
     public ActionsScript[] actionsCmps;
     public Player nearestEnemy;
-    Player[] enemies;
+    public Player nearestTeammate;
+    public Player[] enemies;
+    public Player[] teammates;
     public bool isBallHolder;
     public Vector3 position;
     public float chaseDistance;
@@ -33,13 +35,20 @@ public virtual GameObject findBallInGame(Game game)
 
 public void init(Game game, TeamScript team)
 {
+    this.transform.position = new Vector3(this.transform.position.x,0,this.transform.position.z);
     setGame(game);
     setTeam(team);
+    if(playerTeam.tryZone.tag == "TryZoneA"){
+        this.transform.position = new Vector3(this.transform.position.x,0,565f);
+    }else if(playerTeam.tryZone.tag == "TryZoneB"){
+        this.transform.position = new Vector3(this.transform.position.x,0,495f);
+    }
     this.tag = "Player";
+    teammates = playerTeam.players;
     // this.tag = $"{playerTeam}Player";
     // TODO: refactor so players have teamName in their tags. Will help with game.getEnemiesFor()
     ball = game.ball;
-    chaseDistance = 30;
+    chaseDistance = 50;
     // enemies = getEnemies();
     // playerState = PlayerState.STAGGERED;
 
@@ -71,6 +80,7 @@ void Update()
 if(TryGetComponent<AIActions>(out AIActions aiActions))
 {
     nearestEnemy = getNearestEnemy();
+    nearestTeammate = getNearestTeammate();
     distanceFromNearestEnemy =  Vector3.Distance(position, nearestEnemy.position);
     if(isBallHolder){ //TODO: change to a while
         Debug.Log("running ");
@@ -169,6 +179,30 @@ public Player[] getEnemies()
     return enemies;
 }
 
+public Player getNearestTeammate()
+    {
+        var teammateDistances = getTeammateDistances(); 
+        Debug.Log("Teammate Distances: "+teammateDistances);
+        nearestTeammate = teammateDistances.Aggregate((l, r) => l.Value < r.Value && l.Value > 0 ? l : r).Key;
+        return nearestTeammate;
+    }
+
+public Dictionary<Player,float> getTeammateDistances()
+{
+    Dictionary<Player,float>teammateDistances = new Dictionary<Player,float>();
+    foreach(Player teammate in teammates) { 
+        var teammateDistance = Vector3.Distance(teammate.position,this.position);
+        teammateDistances.Add(teammate,teammateDistance);           
+    }
+    return teammateDistances;
+}
+public Player[] getTeammates()
+{
+    teammates = this.playerTeam.players;
+    return teammates;
+}
+
+
 public virtual void tackle(Player playerBeingTackled){
     if(playerBeingTackled.isBallHolder){
         playerBeingTackled.playerState = PlayerState.DOWN;
@@ -178,12 +212,9 @@ public virtual void tackle(Player playerBeingTackled){
 
 
 public void drop(Ball ball){
-    // isBallHolder = false;
     ball.isBeingHeld = false;
     ball.transform.position= new Vector3(GetComponent<Player>().position.x,0,GetComponent<Player>().position.z+10);// 10 for the bounce offset so it falls away fom player
     ball.transform.SetParent(GetComponent<AIPlayer>().game.transform); 
-    // ball = null;
-    // this.ball = null;
     isBallHolder = false;
     heldObject = null;
     //TODO: refactor to Game.ballsOut();

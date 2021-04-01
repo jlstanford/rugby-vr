@@ -33,7 +33,7 @@ public class Ball : GrabbableObjectVR
         }
     }
 
-    public override void OnInteraction()
+    public override void OnInteractionStarted()
     {
         //TODO: use trigger interact to aim a chip kick
         /* 

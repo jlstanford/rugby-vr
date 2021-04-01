@@ -48,7 +48,7 @@ public class AIActions : ActionsScript
             StartCoroutine("getUpTimer");
         } else if(collidingObject.tag == "GameBall" && collidingObject.GetComponent<Ball>().isBeingPassed) {
             attemptToCatch(collidingObject);
-        } else if(collidingObject.tag == "TryZone" )
+        } else if(collidingObject.tag == "TryZoneA" || collidingObject.tag == "TryZoneB" )
         {
             Debug.Log("You got to the tryzone!");
             if(GetComponent<Player>().isBallHolder )
