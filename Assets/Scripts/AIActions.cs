@@ -80,8 +80,8 @@ public class AIActions : ActionsScript
 
     public void runToward(GameObject obj)
     {
-        
-        GetComponent<AIPlayer>().transform.position = Vector3.MoveTowards(GetComponent<AIPlayer>().position,obj.transform.position,GetComponent<AIPlayer>().moveSpeed * Time.deltaTime);
+        Vector3 objPositionOnGround = new Vector3(obj.transform.position.x,0,obj.transform.position.z);
+        GetComponent<AIPlayer>().transform.position = Vector3.MoveTowards(GetComponent<AIPlayer>().position, objPositionOnGround ,GetComponent<AIPlayer>().moveSpeed * Time.deltaTime);
         Debug.Log("running toward tryzone");
     }
 }
