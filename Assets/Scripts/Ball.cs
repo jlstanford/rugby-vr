@@ -6,9 +6,11 @@ public class Ball : GrabbableObjectVR
 {
     public Transform location;
     public Vector3 position;
+    public Vector3 startPosition;
     public bool isBeingPassed;
-    public bool isOnGround;
+    public bool isOut;
     public Game game;
+    public Player passingPlayer;
     
     public void init(Game game)
     {
@@ -18,21 +20,26 @@ public class Ball : GrabbableObjectVR
     // Start is called before the first frame update
     void Start()
     {
-        position = GetComponent<Transform>().position;
+        startPosition = position = GetComponent<Transform>().position;
         isBeingPassed = false;
-        isOnGround = true;
+        isOut = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         position = GetComponent<Transform>().position;
-        if(position.y <= 0 )
+        if(position.y <= 0 && isBeingHeld == false && GetComponentInParent(typeof(AIPlayer)) == null)
         {
-            isOnGround =true;
+            isOut =true;
         }
     }
 
+    public void reset()
+    {
+        position = startPosition;
+        GetComponent<Transform>().SetParent(passingPlayer.transform);
+    }
     public override void OnInteractionStarted()
     {
         //TODO: use trigger interact to aim a chip kick

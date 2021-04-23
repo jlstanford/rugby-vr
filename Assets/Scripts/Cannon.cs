@@ -33,15 +33,15 @@ public class Cannon : MonoBehaviour
             //dontkeepspawningball
             CancelInvoke();
         }
-        else if( ball.GetComponent<Ball>().isBeingHeld !=  true) 
-        {
-            // repeatspawn
-            if(IsInvoking("FireCannonAtPoint") == false)
-            {
-                InvokeRepeating("FireCannonAtPoint", 0.2f, 7.0f);
-            }
+        // else if( ball.GetComponent<Ball>().isBeingHeld !=  true) 
+        // {
+        //     // repeatspawn
+        //     if(IsInvoking("FireCannonAtPoint") == false)
+        //     {
+        //         InvokeRepeating("FireCannonAtPoint", 0.2f, 7.0f);
+        //     }
             
-        }
+        // }
             
     }
 
@@ -49,15 +49,16 @@ public class Cannon : MonoBehaviour
     {
         // targetObject.transform.position
         //GetComponent<Player>().nearestTeammate.transform.position
-        var point = GetComponent<Player>().playerTeam.teamState == TeamScript.TeamState.OFF ? GetComponent<Player>().nearestTeammate.transform.position: GetComponent<Player>().nearestEnemy.transform.position;
+        var point = GetComponent<Player>().isOffending == true  ? GetComponent<AIPlayer>().getNearestTeammate().transform.position: GetComponent<AIPlayer>().getNearestEnemy().transform.position;
         var velocity = BallisticVelocity(point+destinationOffset, angle);
         velocity = velocity * passForce;
-        Debug.Log("Firing at " + point + " velocity " + velocity);
+        Debug.Log("Cannon launching at " + point + " velocity " + velocity);
 
+        //make this a person that is throwing
         ball.GetComponent<Rigidbody>().transform.position = transform.position;
         ball.GetComponent<Rigidbody>().velocity = velocity;
         ball.GetComponent<Ball>().isBeingPassed = true;
-        ball.GetComponent<Ball>().isOnGround = false;
+        ball.GetComponent<Ball>().isOut = false;
        
     }
 

@@ -11,8 +11,8 @@ public class Winger :  Player
     private float moveVal = 30;
     void Start() 
     {
-        throwForce = throwVal;
-        moveSpeed = moveVal;
+        // throwForce = throwVal;
+        // moveSpeed = moveVal;
     } 
 
     void update()

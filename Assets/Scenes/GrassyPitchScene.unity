@@ -316,25 +316,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78de6edb8afa5b84a955f569ed6280c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 0
-  moveSpeed: 0
   playerState: 0
-  playerTeam: {fileID: 0}
+  playerTeam: 0
   game: {fileID: 0}
+  tryZone: {fileID: 0}
   ball: {fileID: 0}
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
-  nearestEnemy: {fileID: 0}
-  nearestTeammate: {fileID: 0}
+  playerNumber: 14
   enemies: []
   teammates: []
   isBallHolder: 0
   position: {x: 0, y: 0, z: 0}
-  chaseDistance: 0
-  distanceFromNearestEnemy: 0
+  side: 0
+  homePosition: {x: 0, y: 0, z: 0}
   heldObject: {fileID: 0}
-  distanceFromBall: 0
+  isOffending: 0
+  playerManager: {fileID: 0}
+  distanceFromNearestEnemy: 0
+  nearestEnemy: {fileID: 0}
+  nearestTeammate: {fileID: 0}
+  collidingObject: {fileID: 0}
+  actionTarget: {fileID: 0}
+  currentStateName: 
+  throwForce: 0
+  moveSpeed: 0
   passReciever: {fileID: 0}
+  distanceFromBall: 0
+  followDistance: 15
+  chaseDistance: 50
+  actionScript: {fileID: 0}
 --- !u!4 &88039633 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 78f102766cc0fea42963731258f02590,
@@ -356,6 +367,7 @@ MonoBehaviour:
   collidingObject: {fileID: 0}
   heldObject: {fileID: 0}
   throwForce: 0
+  player: {fileID: 88039632}
 --- !u!65 &88039635
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -369,6 +381,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.62967557, y: 1.2292696, z: 0.685846}
   m_Center: {x: 0.010125514, y: 0.56320566, z: 0.15707664}
+--- !u!111 &88039636
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88039630}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &151621584
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -671,6 +698,99 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1855962044}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &186886584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 186886585}
+  - component: {fileID: 186886588}
+  - component: {fileID: 186886587}
+  - component: {fileID: 186886586}
+  m_Layer: 0
+  m_Name: AreaCube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &186886585
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186886584}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.1500244, y: -20, z: 304.6483}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1462708269}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &186886586
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186886584}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &186886587
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186886584}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &186886588
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186886584}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &202797053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -826,7 +946,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 256456913}
-  - component: {fileID: 256456914}
   m_Layer: 0
   m_Name: TeamCarnival
   m_TagString: Untagged
@@ -849,29 +968,8 @@ Transform:
   - {fileID: 1249131732}
   - {fileID: 2698941577992039695}
   m_Father: {fileID: 1462708269}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &256456914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 256456912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9beac8ff6331b664599f5c9ffcc11e0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: 0
-  players:
-  - {fileID: 1249131734}
-  - {fileID: 88039632}
-  - {fileID: 2698941577992039696}
-  ballHolder: {fileID: 0}
-  game: {fileID: 0}
-  tryZone: {fileID: 0}
-  teamState: 0
 --- !u!1 &282005173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1653,7 +1751,6 @@ GameObject:
   - component: {fileID: 499908694}
   - component: {fileID: 499908693}
   - component: {fileID: 499908692}
-  - component: {fileID: 499908691}
   - component: {fileID: 499908690}
   - component: {fileID: 499908689}
   - component: {fileID: 499908697}
@@ -1690,7 +1787,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 499908688}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -1726,18 +1823,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!75 &499908691
-ConstantForce:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499908688}
-  m_Enabled: 0
-  m_Force: {x: 0, y: 0, z: 0}
-  m_RelativeForce: {x: 0, y: 0, z: 0}
-  m_Torque: {x: 0, y: 0, z: 0}
-  m_RelativeTorque: {x: 0, y: 0, z: 0}
 --- !u!54 &499908692
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1846,9 +1931,11 @@ MonoBehaviour:
   grabOffset: {x: 0, y: 0, z: 0}
   location: {fileID: 0}
   position: {x: 0, y: 0, z: 0}
+  startPosition: {x: 0, y: 0, z: 0}
   isBeingPassed: 0
-  isOnGround: 0
+  isOut: 0
   game: {fileID: 0}
+  passingPlayer: {fileID: 0}
 --- !u!1001 &511514142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2053,7 +2140,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 573998603}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -2478,7 +2565,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 3ceeebbac07ec7c4cbb991403d90cfad,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3ceeebbac07ec7c4cbb991403d90cfad,
         type: 3}
@@ -3413,7 +3500,7 @@ Transform:
   m_Children:
   - {fileID: 1280798026}
   m_Father: {fileID: 1462708269}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &951529151
 Rigidbody:
@@ -3429,7 +3516,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!1 &1002951298
 GameObject:
@@ -3836,24 +3923,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211d3d9e5f47ec146b45c125fec988b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 0
-  moveSpeed: 0
   playerState: 0
-  playerTeam: {fileID: 0}
+  playerTeam: 0
   game: {fileID: 0}
+  tryZone: {fileID: 0}
   ball: {fileID: 0}
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
-  nearestEnemy: {fileID: 0}
-  nearestTeammate: {fileID: 0}
+  playerNumber: 0
   enemies: []
   teammates: []
   isBallHolder: 0
   position: {x: 0, y: 0, z: 0}
-  chaseDistance: 0
-  distanceFromNearestEnemy: 0
+  side: 0
+  homePosition: {x: 0, y: 0, z: 0}
   heldObject: {fileID: 0}
-  distanceFromBall: 0
+  isOffending: 0
+  playerManager: {fileID: 0}
+  distanceFromNearestEnemy: 0
+  nearestEnemy: {fileID: 0}
+  nearestTeammate: {fileID: 0}
+  collidingObject: {fileID: 0}
+  actionTarget: {fileID: 0}
+  currentStateName: 
 --- !u!114 &1249131735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3866,24 +3958,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf8e477bc17b9342ab250328249539a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 0
-  moveSpeed: 0
   playerState: 0
-  playerTeam: {fileID: 0}
+  playerTeam: 0
   game: {fileID: 0}
+  tryZone: {fileID: 0}
   ball: {fileID: 0}
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
-  nearestEnemy: {fileID: 0}
-  nearestTeammate: {fileID: 0}
+  playerNumber: 0
   enemies: []
   teammates: []
   isBallHolder: 0
   position: {x: 0, y: 0, z: 0}
-  chaseDistance: 0
-  distanceFromNearestEnemy: 0
+  side: 0
+  homePosition: {x: 0, y: 0, z: 0}
   heldObject: {fileID: 0}
-  distanceFromBall: 0
+  isOffending: 0
+  playerManager: {fileID: 0}
+  distanceFromNearestEnemy: 0
+  nearestEnemy: {fileID: 0}
+  nearestTeammate: {fileID: 0}
+  collidingObject: {fileID: 0}
+  actionTarget: {fileID: 0}
+  currentStateName: 
 --- !u!4 &1280798026 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4324904055579858554, guid: cf3f63826e612a241b81731a89313752,
@@ -4023,7 +4120,7 @@ Transform:
   m_Children:
   - {fileID: 4782524602127675723}
   m_Father: {fileID: 1462708269}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1292996022
 Rigidbody:
@@ -4039,7 +4136,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!1 &1299908831
 GameObject:
@@ -4134,7 +4231,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 93d2b00e12988aa4e957ba1440e8c3f9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 93d2b00e12988aa4e957ba1440e8c3f9,
         type: 3}
@@ -4790,6 +4887,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1462708269}
   - component: {fileID: 1462708270}
+  - component: {fileID: 1462708271}
   m_Layer: 0
   m_Name: GameObjects
   m_TagString: Untagged
@@ -4808,6 +4906,7 @@ Transform:
   m_LocalPosition: {x: 529.15, y: 20, z: 169.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 186886585}
   - {fileID: 1981729509}
   - {fileID: 256456913}
   - {fileID: 1317958650}
@@ -4830,14 +4929,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scores: 
+  players:
+  - {fileID: 1468401139}
+  - {fileID: 1832947719}
+  - {fileID: 88039632}
+  - {fileID: 1249131734}
+  - {fileID: 2698941577992039696}
+  game: {fileID: 0}
+  playerManager: {fileID: 0}
   ballHolder: {fileID: 0}
-  offensiveTeam: {fileID: 0}
-  defensiveTeam: {fileID: 0}
+  offensiveTeam: 0
+  defensiveTeam: 0
+  teamHondaPlayers:
+  - {fileID: 1468401139}
+  - {fileID: 1832947719}
+  teamCarnivalPlayers:
+  - {fileID: 88039632}
+  - {fileID: 1249131734}
+  - {fileID: 2698941577992039696}
   ball: {fileID: 499908688}
   tryZoneA: {fileID: 951529148}
   tryZoneB: {fileID: 1292996019}
-  playerTeam: {fileID: 0}
-  enemyTeam: {fileID: 0}
+  middle: {x: 50, y: 0, z: 50}
+  teams: 
+--- !u!114 &1462708271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462708268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a376e0ac05cd148902143a0ce8f8ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballHolder: {fileID: 0}
+  players: []
+  game: {fileID: 0}
+  offensiveTeam: 0
+  defensiveTeam: 0
+  allPlayersAreRegistered: 0
 --- !u!1 &1468401133 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5e7684c6c5005a94489220b2ed3c2070,
@@ -4912,6 +5044,7 @@ MonoBehaviour:
   collidingObject: {fileID: 0}
   heldObject: {fileID: 0}
   throwForce: 0
+  player: {fileID: 1468401139}
 --- !u!114 &1468401139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4924,25 +5057,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78de6edb8afa5b84a955f569ed6280c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 0
-  moveSpeed: 0
   playerState: 0
-  playerTeam: {fileID: 0}
+  playerTeam: 0
   game: {fileID: 0}
+  tryZone: {fileID: 0}
   ball: {fileID: 0}
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
-  nearestEnemy: {fileID: 0}
-  nearestTeammate: {fileID: 0}
+  playerNumber: 11
   enemies: []
   teammates: []
   isBallHolder: 0
   position: {x: 0, y: 0, z: 0}
-  chaseDistance: 0
-  distanceFromNearestEnemy: 0
+  side: 0
+  homePosition: {x: 0, y: 0, z: 0}
   heldObject: {fileID: 0}
-  distanceFromBall: 0
+  isOffending: 0
+  playerManager: {fileID: 0}
+  distanceFromNearestEnemy: 0
+  nearestEnemy: {fileID: 0}
+  nearestTeammate: {fileID: 0}
+  collidingObject: {fileID: 0}
+  actionTarget: {fileID: 0}
+  currentStateName: 
+  throwForce: 0
+  moveSpeed: 0
   passReciever: {fileID: 0}
+  distanceFromBall: 0
+  followDistance: 15
+  chaseDistance: 50
+  actionScript: {fileID: 0}
 --- !u!1001 &1554249937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5704,6 +5848,7 @@ MonoBehaviour:
   collidingObject: {fileID: 0}
   heldObject: {fileID: 0}
   throwForce: 0
+  player: {fileID: 1832947719}
 --- !u!65 &1832947717
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5745,25 +5890,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bfbbf28d107fba448ca315fe797efa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 0
-  moveSpeed: 0
   playerState: 0
-  playerTeam: {fileID: 0}
+  playerTeam: 0
   game: {fileID: 0}
+  tryZone: {fileID: 0}
   ball: {fileID: 0}
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
-  nearestEnemy: {fileID: 0}
-  nearestTeammate: {fileID: 0}
+  playerNumber: 2
   enemies: []
   teammates: []
   isBallHolder: 0
   position: {x: 0, y: 0, z: 0}
-  chaseDistance: 0
-  distanceFromNearestEnemy: 0
+  side: 0
+  homePosition: {x: 0, y: 0, z: 0}
   heldObject: {fileID: 0}
-  distanceFromBall: 0
+  isOffending: 0
+  playerManager: {fileID: 0}
+  distanceFromNearestEnemy: 0
+  nearestEnemy: {fileID: 0}
+  nearestTeammate: {fileID: 0}
+  collidingObject: {fileID: 0}
+  actionTarget: {fileID: 0}
+  currentStateName: 
+  throwForce: 0
+  moveSpeed: 0
   passReciever: {fileID: 0}
+  distanceFromBall: 0
+  followDistance: 15
+  chaseDistance: 0
+  actionScript: {fileID: 0}
 --- !u!1001 &1843020683
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6918,7 +7074,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1981729509}
-  - component: {fileID: 1981729510}
   m_Layer: 0
   m_Name: TeamHonda
   m_TagString: Untagged
@@ -6940,28 +7095,8 @@ Transform:
   - {fileID: 1468401136}
   - {fileID: 1832947714}
   m_Father: {fileID: 1462708269}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1981729510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1981729508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9beac8ff6331b664599f5c9ffcc11e0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: 0
-  players:
-  - {fileID: 1468401139}
-  - {fileID: 1832947719}
-  ballHolder: {fileID: 0}
-  game: {fileID: 1462708270}
-  tryZone: {fileID: 0}
-  teamState: 0
 --- !u!1 &2135617074
 GameObject:
   m_ObjectHideFlags: 0
@@ -7178,17 +7313,17 @@ PrefabInstance:
     - target: {fileID: 6735982532464321753, guid: f625824d7ac55cf4db48938cf568c45d,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6735982532464321753, guid: f625824d7ac55cf4db48938cf568c45d,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6735982532464321753, guid: f625824d7ac55cf4db48938cf568c45d,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6735982532464321753, guid: f625824d7ac55cf4db48938cf568c45d,
         type: 3}
@@ -7296,25 +7431,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78de6edb8afa5b84a955f569ed6280c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 0
-  moveSpeed: 0
   playerState: 0
-  playerTeam: {fileID: 0}
+  playerTeam: 0
   game: {fileID: 0}
+  tryZone: {fileID: 0}
   ball: {fileID: 0}
   simpleCharacterController: {fileID: 0}
   actionsCmps: []
-  nearestEnemy: {fileID: 0}
-  nearestTeammate: {fileID: 0}
+  playerNumber: 11
   enemies: []
   teammates: []
   isBallHolder: 0
   position: {x: 0, y: 0, z: 0}
-  chaseDistance: 0
-  distanceFromNearestEnemy: 0
+  side: 0
+  homePosition: {x: 0, y: 0, z: 0}
   heldObject: {fileID: 0}
-  distanceFromBall: 0
+  isOffending: 0
+  playerManager: {fileID: 0}
+  distanceFromNearestEnemy: 0
+  nearestEnemy: {fileID: 0}
+  nearestTeammate: {fileID: 0}
+  collidingObject: {fileID: 0}
+  actionTarget: {fileID: 0}
+  currentStateName: 
+  throwForce: 0
+  moveSpeed: 0
   passReciever: {fileID: 1249131734}
+  distanceFromBall: 0
+  followDistance: 15
+  chaseDistance: 0
+  actionScript: {fileID: 0}
 --- !u!114 &2698941577992039697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7345,6 +7491,7 @@ MonoBehaviour:
   collidingObject: {fileID: 0}
   heldObject: {fileID: 0}
   throwForce: 0
+  player: {fileID: 2698941577992039696}
 --- !u!82 &2698941577992039699
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7689,9 +7836,11 @@ MonoBehaviour:
   grabOffset: {x: 0, y: 0, z: 0}
   location: {fileID: 0}
   position: {x: 0, y: 0, z: 0}
+  startPosition: {x: 0, y: 0, z: 0}
   isBeingPassed: 0
-  isOnGround: 0
+  isOut: 0
   game: {fileID: 0}
+  passingPlayer: {fileID: 0}
 --- !u!1001 &4782524602127675720
 PrefabInstance:
   m_ObjectHideFlags: 0

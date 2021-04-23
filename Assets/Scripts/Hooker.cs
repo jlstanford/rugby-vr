@@ -9,8 +9,8 @@ public class Hooker :  Player
     private float moveVal = 15;
     void Start() 
     {
-        throwForce = throwVal;
-        moveSpeed = moveVal;
+        // throwForce = throwVal;
+        // moveSpeed = moveVal;
     } 
 
     void update()
