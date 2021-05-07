@@ -7,7 +7,9 @@ public class GoingDown : AIPlayerState
     public AIPlayerState DoState(Player player)
     {
         // player.goToStartPosition();
-        return player.playerManager.down;
+        player.drop(player.game.ball.GetComponent<Ball>());
+            
+        return PlayerManager.down;
     } 
     // Start is called before the first frame update
     void Start()

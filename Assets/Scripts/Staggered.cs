@@ -6,23 +6,23 @@ public class Staggered  : AIPlayerState
 {
     public AIPlayerState DoState(Player player)
     {
-        player.GetComponent<AIPlayer>().getStaggered();
+        player.GetComponent<Player>().getStaggered();
         if(player.isBallHolder == false && player.playerManager.offensiveTeam == player.playerTeam)
         {
-            return player.playerManager.following;
+            return PlayerManager.following;
         }
         else if(player.isBallHolder == false && player.playerManager.offensiveTeam != player.playerTeam)
         {
-            return player.playerManager.chasing;    
+            return PlayerManager.chasing;    
         }
         else if(player.isBallHolder == true && player.playerManager.offensiveTeam == player.playerTeam)
         {
             player.playerManager.updatePossession(player.playerTeam);
-            return player.playerManager.ballCarrying;    
+            return PlayerManager.ballCarrying;    
         }
         else
         {
-            return player.playerManager.staggered;    
+            return PlayerManager.staggered;    
         }
         
     }

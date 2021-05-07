@@ -10,14 +10,14 @@ public class Down : AIPlayerState
         getUpTimer();
         if(player.game.ball.GetComponent<Ball>().isOut == true)
         {
-            return player.playerManager.chasing;
+            return PlayerManager.chasing;
         }
         else if(player.playerManager.offensiveTeam == player.playerTeam)
         {
-            return player.playerManager.staggered;
+            return PlayerManager.staggered;
         }else
         {
-            return player.playerManager.flat;
+            return PlayerManager.flat;
         }
 
        

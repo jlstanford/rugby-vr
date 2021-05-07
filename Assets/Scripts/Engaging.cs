@@ -9,14 +9,14 @@ public class Engaging : AIPlayerState
         var rnd = new System.Random();
         var randNum = rnd.Next();
         if (randNum%2 == 0 ) {
-           return player.playerManager.passing;
+           return PlayerManager.passing;
         } else {
             Debug.Log("No pass; get hit! "+player.nearestTeammate+"- balls out");
             // player.ball.GetComponent<Ball>().isBeingPassed = false;
             // player.ball.GetComponent<Ball>().isOut = true;
             // player.ball.GetComponent<Ball>().isOut = true;
-            player.GetComponent<AIPlayer>().drop(player.ball.GetComponent<Ball>());
-            return player.playerManager.down;
+            player.GetComponent<Player>().drop(player.ball.GetComponent<Ball>());
+            return PlayerManager.down;
         }
         // return this;
     }

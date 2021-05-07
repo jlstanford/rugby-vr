@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AIActions : ActionsScript
 {
-    public AIPlayer player; 
+    // public AIPlayer player; 
     // public AIActions()
     // {
     //     // this.player=GetComponent<AIPlayer>();

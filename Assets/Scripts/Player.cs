@@ -14,23 +14,25 @@ public abstract class Player : MonoBehaviour
     public MovementScript simpleCharacterController;
     public ActionsScript[] actionsCmps;
     public int playerNumber;
-    public List<Player> enemies;
-    public List<Player> teammates;
-    public bool isBallHolder;
+    public List<Player> enemies = new List<Player>();
+    public List<Player> teammates = new List<Player>();
+    public bool isBallHolder = false;
     public Vector3 position;
     public Game.Side side;
-    public Vector3 homePosition;
-    public GameObject heldObject;
-    public bool isOffending;
-    public PlayerManager playerManager;
-    public float distanceFromNearestEnemy;
-    public Player nearestEnemy;
-    public Player nearestTeammate;
-    public GameObject collidingObject ;
-    public AIPlayer actionTarget = null;
-    public string previousStateName;
-    public AIPlayerState currentState;
-    public string currentStateName;
+    public Vector3 homePosition = new Vector3(50.0f,0.0f,50.0f);
+    public GameObject heldObject = null;
+    public bool isOffending = false;
+    public PlayerManager playerManager = null;
+    public float distanceFromNearestEnemy = 0.0f;
+    public Player nearestEnemy = null;
+    public Player nearestTeammate = null;
+    public GameObject collidingObject = null;
+    public Player actionTarget = null;
+    public string previousStateName = "";
+    public AIPlayerState currentState = PlayerManager.ready;
+    public string currentStateName = "";
+    public float chaseDistance = 50;
+
     
 
 
@@ -72,7 +74,7 @@ void Update()
     // foreach()
 
     
-    this.transform.position = GetComponent<Transform>().position;
+    this.transform.position = position;
     playerManager.updatePosition(this,position);
 
    
@@ -92,7 +94,7 @@ public void update(PlayerManager playerManager)
 public void goToStartPosition()
 {
     Debug.Log(this+"Going home:"+homePosition+" from "+transform.position);
-    transform.position = homePosition;
+    this.transform.position = new Vector3(homePosition.x,homePosition.y,homePosition.z);
 }
 
 public void setTeam(Team team)
@@ -133,19 +135,17 @@ public virtual void tackle(Player playerBeingTackled){
 
 
 public void drop(Ball ball){
-    ball.transform.SetParent(null); //game.transform
+    var dropPosition = this.transform.position;
     playerManager.ballHolder = null;
-    ball.transform.position= new Vector3(position.x,0,position.z+20);// 20 for the bounce offset so it falls away fom player
-    Debug.Log("Ball Dropped!");
-    ball.isOut = true;
     game.ballHolder = null;
     isBallHolder = false;
     heldObject = null;
-    ball.isBeingHeld = false;
+
+    ball.beDroppedBy(this);
     
 }
 
-public void beTackled()
+public virtual void beTackled()
 {
     Debug.Log(GetComponent<Player>()+" being tackled");
     playerState = PlayerState.DOWN;
@@ -154,12 +154,99 @@ public void beTackled()
 
 public void tryToScore()
 {
-    // if(GetComponent<AIActions>() != null)
-    // {
-    //     GetComponent<AIActions>().runToward(tryZone);
-    // }
-    GetComponent<AIPlayer>().runToward(tryZone);
+    if(TryGetComponent<AIPlayer>(out AIPlayer aiPlayer) == true)
+    {
+        GetComponent<AIPlayer>().runToward(tryZone);
+    }
 }
+
+
+    public virtual Player getNearestEnemy()
+    {
+        return playerManager.getNearestEnemyFor(this);
+    }
+
+    public virtual Player getNearestTeammate()
+    {
+        return playerManager.getNearestTeammateFor(this);
+
+    }
+
+    
+
+    public virtual void passTo(Player targetPlayer)
+    {
+        ball.transform.SetParent(null);
+        var point = targetPlayer.transform.position;
+        Debug.Log("Passing to " + targetPlayer );
+        // var velocity = calculatePassVelocity(point, 45);
+        // velocity = velocity * throwForce;
+        ball.GetComponent<Ball>().BePassedBy(this,point);
+        isBallHolder = false;
+        heldObject = null;
+        
+    }
+
+    private Vector3 calculatePassVelocity(Vector3 recievingPlayer, float angle)
+    {
+        Vector3 dir = recievingPlayer - this.position; // get Target Direction
+            float height = dir.y; // get height difference
+            dir.y = 0; // retain only the horizontal difference
+            float dist = dir.magnitude; // get horizontal distance
+            float a = angle * Mathf.Deg2Rad; // Convert angle to radians
+            dir.y = dist * Mathf.Tan(a); // set dir to the elevation angle.
+            dist += height / Mathf.Tan(a); // Correction for small height differences
+
+            // Calculate the velocity magnitude
+            float velocity = Mathf.Sqrt(dist * Physics.gravity.magnitude / Mathf.Sin(2 * a));
+            return velocity * dir.normalized; // Return a normalized vector.
+    }
+
+    public virtual void catch_(GameObject ball)
+    {
+        heldObject = ball;
+        Debug.Log(this+"Caught the Ball!"+ball);
+        ball.transform.SetParent(this.transform);
+        // ball.transform.position.y = 1.0f;
+        ball.transform.position = new Vector3(ball.transform.position.x,1.0f,ball.transform.position.z);
+        // heldObject.GetComponent<Rigidbody>().isKinematic = true;
+        ball.GetComponent<Ball>().isBeingPassed = false;
+        ball.GetComponent<Ball>().isBeingHeld = true;
+        ball.GetComponent<Ball>().isOut = false;
+        ball.GetComponent<Ball>().currentBallState = Ball.ballIsBeingHeld;
+        ball.GetComponent<Rigidbody>().useGravity = false;
+        ball.GetComponent<Rigidbody>().isKinematic = true;
+        isBallHolder = true;
+        // playerManager.updatePossession(playerTeam);
+        playerManager.ballHolder = this;
+        heldObject = ball;
+    }
+    public virtual void pickUp(GameObject ball)
+    {
+        heldObject = ball;
+        Debug.Log("Picked up the Ball!");
+        isBallHolder = true;
+        heldObject = ball;
+        playerManager.ballHolder = this;
+        playerManager.updatePossession(playerTeam);
+        ball.GetComponent<Ball>().bePickedUpBy(this);
+    }
+    public virtual void lineUp()
+    {
+        Debug.Log(this+"calling goToStartPosition");
+        goToStartPosition();
+    }
+
+    public virtual void getStaggered()
+    {
+
+    }
+    // public override void tackle(Player targetPlayer)
+    // {
+    //     // targetPlayer.playerState = PlayerState.DOWN;
+    //     // targetPlayer.drop(ball.GetComponent<Ball>());
+    //     base.tackle(targetPlayer);
+    // }
 
 
 }

@@ -9,16 +9,19 @@ public class BallCarrying : AIPlayerState
         // if(player.isBallHolder){
             player.playerManager.updatePossession(player.playerTeam);
             Debug.Log("running toward ball carrying player "+player+"'s tryzone: "+player.tryZone);
-            player.GetComponent<AIPlayer>().runToward(player.tryZone);
+            if(player.TryGetComponent<AIPlayer>(out AIPlayer aiPlayer) == true)
+            {
+               player.GetComponent<AIPlayer>().runToward(player.tryZone); 
+            }
             if(Vector3.Distance(player.transform.position, player.nearestEnemy.transform.position) < 15  )//player.nearestEnemy.GetComponent<AIPlayer>().currentState.ToString() ==  "Tackling"
             {
-                return player.playerManager.engaging;
+                return PlayerManager.engaging;
             }else if(Vector3.Distance(player.transform.position, player.tryZone.transform.position) < 0.1f )//player.collidingObject.tag == "TryZoneA" || player.collidingObject.tag == "TryZoneB"
             {
-                return player.playerManager.scoring;
+                return PlayerManager.scoring;
             } else 
             {
-                return player.playerManager.ballCarrying; 
+                return PlayerManager.ballCarrying; 
             }
         // }
         // else {

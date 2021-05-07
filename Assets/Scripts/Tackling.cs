@@ -6,20 +6,17 @@ public class Tackling : AIPlayerState
 {
     public AIPlayerState DoState(Player player)
     {
-        // player.goToStartPosition();
-        // if(player.actionTarget.playerTeam == player.playerTeam)
-        // {
-        //     return player.playerManager.staggered;
-        // }
-        // else
-        // {
-            if(player.collidingObject.TryGetComponent<AIPlayer>(out AIPlayer targetPlayer) == true)
+        
+            if(player.collidingObject == null)
             {
-                targetPlayer.currentState = player.playerManager.down;
+                //Do nothing special
             }
-            player.collidingObject.GetComponent<AIPlayer>().drop(player.collidingObject.GetComponent<AIPlayer>().ball.GetComponent<Ball>());
-            return player.playerManager.chasing;
-        // }
+            else if(player.collidingObject.TryGetComponent<Player>(out Player targetPlayer) == true)
+            {
+                targetPlayer.currentState = PlayerManager.goingDown;
+                
+            }
+            return PlayerManager.chasing;
     } 
     // Start is called before the first frame update
     void Start()

@@ -6,31 +6,31 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    public Player ballHolder;
+    public Player ballHolder = null;
     public Dictionary<Team,List<Player>> playerRegistry = new Dictionary<Team, List<Player>>();
-    public List<Player> players;
-    public Game game;
-    public Team offensiveTeam;
-    public Team defensiveTeam;
+    public List<Player> players = new List<Player>();
+    public Game game = null;
+    public Team offensiveTeam = Team.TEAM_CARNIVAL;
+    public Team defensiveTeam = Team.TEAM_CARNIVAL;
     public Dictionary<Player,Vector3> playerPositions = new Dictionary<Player,Vector3>();
-    public bool allPlayersAreRegistered;
-    public Dictionary<Game.Side,GameObject> tryZoneAreas;
+    public bool allPlayersAreRegistered = false;
+    public Dictionary<Game.Side,GameObject> tryZoneAreas = new Dictionary<Game.Side,GameObject>();
     public Dictionary<Team,Game.Side> sides = new Dictionary<Team,Game.Side>();
-    public LinedUp linedUp = new LinedUp();
-    public BallCarrying ballCarrying = new BallCarrying();
-    public Catching catching = new Catching();
-    public Down down = new Down();
-    public Engaging engaging = new Engaging();
-    public Flat flat = new Flat();
-    public Following following = new Following();
-    public Passing passing = new Passing();
-    public Chasing chasing = new Chasing();
-    public Ready ready = new Ready();
-    public Tackling tackling = new Tackling();
-    public Scoring scoring = new Scoring();
-    public GoingDown goingDown = new GoingDown();
-    public Staggered staggered = new Staggered();
-    public Grabbing grabbing = new Grabbing();
+    public static LinedUp linedUp = new LinedUp();
+    public static BallCarrying ballCarrying = new BallCarrying();
+    public static Catching catching = new Catching();
+    public static Down down = new Down();
+    public static Engaging engaging = new Engaging();
+    public static Flat flat = new Flat();
+    public static Following following = new Following();
+    public static Passing passing = new Passing();
+    public static Chasing chasing = new Chasing();
+    public static Ready ready = new Ready();
+    public static Tackling tackling = new Tackling();
+    public static Scoring scoring = new Scoring();
+    public static GoingDown goingDown = new GoingDown();
+    public static Staggered staggered = new Staggered();
+    public static Grabbing grabbing = new Grabbing();
 
     // public Dictionary<Player,Vector3> playerPositions;
    
@@ -55,6 +55,7 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         // game.updatePlayerInfo(this);
+        
     }
 
     public void update(Game game)
@@ -64,11 +65,7 @@ public class PlayerManager : MonoBehaviour
         this.tryZoneAreas = game.tryZoneAreas;
         this.offensiveTeam = game.offensiveTeam;
         this.defensiveTeam = game.defensiveTeam;
-        // if(ballHolder != null && ballHolder.distanceFromNearestEnemy<15 && ballHolder.playerState==PlayerState.BALL_CARRYING)
-        // {
-        //     ballHolder.playerState = PlayerState.ENGAGING;
-        //     // ballHolder.nearestEnemy.playerState = PlayerState.ENGAGING;
-        // }
+        
         foreach (Player player in getPlayers())
         {
           player.update(this);
@@ -167,7 +164,7 @@ public class PlayerManager : MonoBehaviour
         playerRegistry.Add(team,players);
         foreach(Player player in players)
         {
-            player.transform.position = new Vector3(this.transform.position.x,0,this.transform.position.z);
+            player.transform.position = new Vector3(player.transform.position.x,0,player.transform.position.z);
             player.init(game,this,team);
             playerPositions[player] = player.transform.position;
             // Debug.Log(player);
@@ -183,7 +180,7 @@ public class PlayerManager : MonoBehaviour
     {
         foreach(Team team in playerRegistry.Keys)
         {
-            playerRegistry[team].ForEach( player => {player.goToStartPosition();} );
+            playerRegistry[team].ForEach( player => {player.currentState = linedUp;} );
         }
     }
 
@@ -225,12 +222,12 @@ public Dictionary<Player,float> getEnemyDistancesFor(Player player)
 public List<Player> getEnemiesFor(Player player)
 {
     //refactor to call playerManager.getEnemies();
-    List<Player> enemies = new List<Player>();
-    enemies = player.playerTeam == Team.TEAM_CARNIVAL ? playerRegistry[Team.TEAM_HONDA] : playerRegistry[Team.TEAM_CARNIVAL];
+    // List<Player> enemies = new List<Player>();
+    player.enemies = player.playerTeam == Team.TEAM_CARNIVAL ? playerRegistry[Team.TEAM_HONDA] : playerRegistry[Team.TEAM_CARNIVAL];
     // var enemies  ;
     // getEnemiesFor(this);
-    Debug.Log("Enemies: "+enemies.ToString());
-    return enemies;
+    Debug.Log("Enemies: "+player.enemies.ToString());
+    return player.enemies;
 }
 
 public Player getNearestTeammateFor(Player player)
@@ -238,7 +235,7 @@ public Player getNearestTeammateFor(Player player)
         //refactor to call playerManager.getNearestEnemy();
         var teammateDistances = getTeammateDistancesFor(player); 
         // Debug.Log("Teammate Distances: "+teammateDistances);
-        var nearestTeammate = teammateDistances.Aggregate((l, r) => l.Value < r.Value && l.Value > 50 ? l : r).Key;
+        var nearestTeammate = teammateDistances.Aggregate((lowest, next) => lowest.Value < next.Value&& lowest.Key != player? lowest : next).Key; 
         return nearestTeammate;
     }
 
@@ -297,7 +294,7 @@ public virtual void updatePlayerState(Player player)//listen for possession upda
     }
     //player should be chasing object(player or ball)if ball is nearby(held or on ground)
     if(ballHolder != null){
-        if(Vector3.Distance(ballHolder.position,player.position) < player.GetComponent<AIPlayer>().chaseDistance && player.isBallHolder == false) //&& this.game.ballHolder.playerTeam != team
+        if(Vector3.Distance(ballHolder.position,player.position) < player.GetComponent<Player>().chaseDistance && player.isBallHolder == false) //&& this.game.ballHolder.playerTeam != team
         {
             // player.playerState = PlayerState.CHASING;
             player.currentState = chasing;

@@ -9,12 +9,17 @@ public class Ready : AIPlayerState
         // player.goToStartPosition();
         if(player.playerManager.ballHolder != null && player.playerManager.ballHolder.playerTeam != player.playerTeam)
         {
-            return player.playerManager.chasing;
-        } else if(player.playerManager.ballHolder != null && player.playerManager.ballHolder.playerTeam == player.playerTeam)
+            return PlayerManager.chasing;
+        }
+        else if(player.game.ball.GetComponent<Ball>().currentBallState == Ball.ballIsOut)
         {
-            return player.playerManager.following;
+            return PlayerManager.chasing;
+        }
+         else if(player.playerManager.ballHolder != null && player.playerManager.ballHolder.playerTeam == player.playerTeam)
+        {
+            return PlayerManager.following;
         }else {
-            return player.playerManager.ready;
+            return PlayerManager.ready;
         }
     } 
 

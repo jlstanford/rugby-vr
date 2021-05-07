@@ -9,8 +9,8 @@ public class LinedUp : AIPlayerState
         // player.goToStartPosition();
           // player = GetComponent<AIPlayer>();
         Debug.Log("Lined up player:"+player);
-        player.GetComponent<AIPlayer>().lineUp();   
-        return player.playerManager.ready;
+        player.GetComponent<Player>().lineUp();   
+        return PlayerManager.ready;
     } 
 
     // Start is called before the first frame update

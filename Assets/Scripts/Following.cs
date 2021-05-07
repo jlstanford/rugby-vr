@@ -7,8 +7,9 @@ public class Following: AIPlayerState
     public AIPlayerState DoState(Player player)
     {
         // Player ballHolder = player.playerManager.ballHolder;
-        player.GetComponent<AIPlayer>().getStaggered();
-        return player.playerManager.following;
+
+        player.GetComponent<Player>().getStaggered();
+        return PlayerManager.following;
     }
     // Start is called before the first frame update
     void Start()

@@ -12,8 +12,7 @@ public class AIPlayer : Player
     public float distanceFromBall;
     public float followDistance = 15;
     
-    public float chaseDistance = 50;
-    public AIActions actionScript = new AIActions();
+    // public AIActions actionScript = new AIActions();
     // public AIPlayerState currentState;
     // public string currentStateName;
     // public float distanceFromNearestEnemy;
@@ -25,7 +24,7 @@ public class AIPlayer : Player
     void Start()
     {
         // actionScript = new AIActions(this);
-        currentState = playerManager.linedUp; 
+        currentState = PlayerManager.linedUp; 
        
     }
 
@@ -35,36 +34,25 @@ public class AIPlayer : Player
     //     // this.tryZone = playerManager.tryZoneAreas[side];
     // }
     void Update(){
-        // chaseDistance = 50;
         this.side = playerManager.sides[playerTeam];
         this.tryZone = playerManager.tryZoneAreas[side];
-        // Debug.Log(this+":"+side+":"+tryZone);
-        
-        // Debug.Log(this+" performing "+playerState+" action");
-
-
-        // nearestEnemy = playerManager.getNearestEnemyFor(this);
         nearestEnemy = getNearestEnemy();
-        // nearestTeammate = playerManager.getNearestTeammateFor(this);
         nearestTeammate = getNearestTeammate();
         // Debug.Log("distance for player" +this+" is:"+playerManager.getDistanceFromNearestEnemy(this));
         distanceFromNearestEnemy = playerManager.getDistanceFromNearestEnemy(this); 
-        
-        // GetComponent<AIActions>().performActionFor(playerState);
         previousStateName = currentState.ToString();
         currentState = currentState.DoState(this);
         currentStateName = currentState.ToString();
-        // Debug.Log(currentState.ToString());
         
         
     }
 
-    public Player getNearestEnemy()
+    public override Player getNearestEnemy()
     {
         return playerManager.getNearestEnemyFor(this);
     }
 
-    public Player getNearestTeammate()
+    public override Player getNearestTeammate()
     {
         return playerManager.getNearestTeammateFor(this);
 
@@ -72,30 +60,20 @@ public class AIPlayer : Player
 
     
 
-    public virtual void passTo(Player targetPlayer)
+    public override void passTo(Player targetPlayer)
     {
         ball.transform.SetParent(null);
         var point = targetPlayer.transform.position;
         Debug.Log("Passing to " + targetPlayer );
-        var velocity = calculatePassVelocity(point, 45);
-        // Debug.Log("Passing at " + point + " velocity " + velocity);
-        velocity = velocity * throwForce;
-        Debug.Log("Passing at " + point + " velocity " + velocity);
-
-        //make this a person that is throwing
-        ball.GetComponent<Rigidbody>().transform.position = transform.position;
-        ball.GetComponent<Rigidbody>().velocity = velocity;
-        ball.GetComponent<Ball>().isBeingPassed = true;
-        ball.GetComponent<Ball>().isBeingHeld = false;
-        ball.GetComponent<Ball>().isOut = false;
-        // ball.transform.SetParent(null); 
-        // this.ball = null;
+        // var velocity = calculatePassVelocity(point, 45);
+        // velocity = velocity * throwForce;
+        ball.GetComponent<Ball>().BePassedBy(this,point);
         isBallHolder = false;
         heldObject = null;
         
     }
 
-    private Vector3 calculatePassVelocity(Vector3 recievingPlayer, float angle)
+    public Vector3 calculatePassVelocity(Vector3 recievingPlayer, float angle)
     {
         Vector3 dir = recievingPlayer - this.position; // get Target Direction
             float height = dir.y; // get height difference
@@ -110,7 +88,7 @@ public class AIPlayer : Player
             return velocity * dir.normalized; // Return a normalized vector.
     }
 
-    public virtual void catch_(GameObject ball)
+    public override void catch_(GameObject ball)
     {
         heldObject = ball;
         Debug.Log(this+"Caught the Ball!"+ball);
@@ -121,6 +99,7 @@ public class AIPlayer : Player
         ball.GetComponent<Ball>().isBeingPassed = false;
         ball.GetComponent<Ball>().isBeingHeld = true;
         ball.GetComponent<Ball>().isOut = false;
+        ball.GetComponent<Ball>().currentBallState = Ball.ballIsBeingHeld;
         ball.GetComponent<Rigidbody>().useGravity = false;
         ball.GetComponent<Rigidbody>().isKinematic = true;
         isBallHolder = true;
@@ -128,24 +107,17 @@ public class AIPlayer : Player
         playerManager.ballHolder = this;
         heldObject = ball;
     }
-    public virtual void pickUp(GameObject ball)
+    public override void pickUp(GameObject ball)
     {
-        ball.GetComponent<Rigidbody>().isKinematic = true;
         heldObject = ball;
         Debug.Log("Picked up the Ball!");
-        ball.transform.SetParent(this.transform);
-        // ball.GetComponent<Transform>().position = this.position;
-        // game.ball.transform.SetParent(this.transform);
-        ball.GetComponent<Transform>().position = new Vector3(this.position.x,1,this.position.z);
-        // heldObject.GetComponent<Rigidbody>().isKinematic = true;
-        ball.GetComponent<Ball>().isBeingPassed = false;
-        ball.GetComponent<Ball>().isBeingHeld = true;
-        ball.GetComponent<Ball>().isOut = false;
         isBallHolder = true;
         heldObject = ball;
         playerManager.ballHolder = this;
+        playerManager.updatePossession(playerTeam);
+        ball.GetComponent<Ball>().bePickedUpBy(this);
     }
-    public void lineUp()
+    public override void lineUp()
     {
         Debug.Log(this+"calling goToStartPosition");
         goToStartPosition();
@@ -184,15 +156,12 @@ public class AIPlayer : Player
         Debug.Log("player performing trigger action"+GetComponent<AIPlayer>());
         Debug.Log("collding object tag:"+collidingObject.tag);
         Debug.Log("ballHolding player:"+GetComponent<AIPlayer>().isBallHolder);
+
         if(collidingObject.tag == $"{playerTeam} Player" && isBallHolder == true ) {
 
 
             Debug.Log("in go down trigger");
-            // collidingObject = null;
-            // player.beTackled();
-            // player.drop(GetComponentInChildren<Ball>());
-            // StartCoroutine("getUpTimer");
-            currentState = playerManager.goingDown;
+            currentState = PlayerManager.goingDown;
         }else if( collidingObject.GetComponent<AIPlayer>() == playerManager.ballHolder && playerManager.ballHolder != null ) { // collidingObject.TryGetComponent<AIPlayer>(out AIPlayer collidingPlayer) == true
             // collidingObject.GetComponent<AIPlayer>().playerTeam != this.playerTeam
             Debug.Log("tackling player - "+collidingObject.GetComponent<AIPlayer>());
@@ -200,17 +169,22 @@ public class AIPlayer : Player
             // tackle(collidingObject.GetComponent<AIPlayer>());
             base.actionTarget = collidingObject.GetComponent<AIPlayer>();
             base.collidingObject = collidingObject;
-            currentState = playerManager.tackling;
+            currentState = PlayerManager.tackling;
         }else if(collidingObject.tag == "GameBall" && collidingObject.GetComponent<Ball>().isBeingPassed && collidingObject.GetComponent<Ball>().isOut == false) {
             // attemptToCatch(collidingObject);
             // Debug.Log(this+ " catching ball ");
-            currentState = playerManager.catching;
-        } else if(collidingObject.tag == "TryZoneA" || collidingObject.tag == "TryZoneB" )
+            currentState = PlayerManager.catching;
+        } else if(collidingObject.tag == "GameBall" && game.ball.GetComponent<Ball>().currentBallState == Ball.ballIsOut ) {
+            // attemptToCatch(collidingObject);
+            // Debug.Log(this+ " catching ball ");
+            Debug.Log("trigger pick up");
+            currentState = PlayerManager.grabbing;
+        }else if(collidingObject.tag == "TryZoneA" || collidingObject.tag == "TryZoneB" && collidingObject.tag == tryZone.ToString() )
         {
             Debug.Log(this+" got to the tryzone!");
             if(isBallHolder )
             {
-                currentState = playerManager.scoring;
+                currentState = PlayerManager.scoring;
                 // touchDown();
             }
             //game.updateScores();
@@ -220,7 +194,7 @@ public class AIPlayer : Player
         }
         
     }
-    public void getStaggered()
+    public override void getStaggered()
     {
         // player = GetComponent<AIPlayer>();
         Player ballHolder = playerManager.ballHolder;
@@ -239,9 +213,14 @@ public class AIPlayer : Player
     
     public void runToward(GameObject obj)
     {
-        Vector3 objPositionOnGround = new Vector3(obj.transform.position.x,0,obj.transform.position.z);
-        this.transform.position = Vector3.MoveTowards(this.transform.position, objPositionOnGround ,moveSpeed * Time.deltaTime);
-        Debug.Log("running toward "+obj);
+        // Vector3 objPositionOnGround = new Vector3(obj.transform.position.x,0,obj.transform.position.z);
+        // transform.position = Vector3.MoveTowards(transform.position, obj.GetComponent<Transform>().position ,moveSpeed * Time.deltaTime);
+        Vector3 maxDistanceDelta = Vector3.MoveTowards(transform.position, obj.GetComponent<Transform>().position ,moveSpeed * Time.deltaTime);
+        transform.position = new Vector3(maxDistanceDelta.x,0,maxDistanceDelta.z);
+        // transform.position.x = transform.position.x;
+        // tranform.position.y = 0;
+        // transform.position.z = transform.postion.z;
+        Debug.Log(this+"at"+transform.position+" is running toward "+obj+" at "+obj.GetComponent<Transform>().position);
     }
 
 }

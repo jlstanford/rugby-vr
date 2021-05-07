@@ -44,10 +44,16 @@ public class Game : MonoBehaviour
     [System.Serializable]
     public enum GameState
     {
-        PAUSE,
-        PLAY,
-        STOP
+        PAUSED,
+        PLAYING,
+        STOPPED,
+        KICKOFF
     }
+     public GameState currentGameState = GameState.STOPPED;
+    public KickingOff kickingoff;
+    public Playing playing;
+    public Stopped stopped;
+    
     [System.Serializable]
     public enum Side
     {
@@ -56,6 +62,8 @@ public class Game : MonoBehaviour
     }
     public Dictionary<Team,Side> sides = new Dictionary<Team,Side>();
     public Dictionary<Side,GameObject> tryZoneAreas = new Dictionary<Side,GameObject>();
+    public Ball ballManager;
+    public Bounds gameBounds;
 
 /*
 *
@@ -82,6 +90,7 @@ public class Game : MonoBehaviour
             {Side.SOUTH,tryZoneB}
         };
         // this.playerManager = new PlayerManager();
+        this.ballManager = ball.GetComponent<Ball>();
         this.playerManager = GetComponent<PlayerManager>(); //initialize playerManager
         playerManager.init(this);
         playerManager.addTeamToRegistry(Team.TEAM_CARNIVAL,teamCarnivalPlayers);
@@ -105,9 +114,10 @@ public class Game : MonoBehaviour
         Ball ballScript = GetComponentInChildren<Ball>();
         ballScript.init(this);
         coinFlip(teams); 
-        playerManager.setPlayerStates(players,playerManager.linedUp);
+        // playerManager.setPlayerStates(players,playerManager.linedUp);
         setScore(Team.TEAM_CARNIVAL,0);
         setScore(Team.TEAM_HONDA,0);
+        currentGameState = GameState.KICKOFF;
         updateComponents();
      
         
@@ -120,6 +130,48 @@ public class Game : MonoBehaviour
         //  {
         //     if(ts.ballHolder != null) this.ballHolder = ts.ballHolder;
         //  }
+        if(currentGameState == Game.GameState.KICKOFF)
+        {
+            // line up players
+            playerManager.setPlayerStates(players,PlayerManager.linedUp);
+            // call ball.kickOff();
+            ball.GetComponent<Ball>().kickoff();
+            currentGameState = Game.GameState.PLAYING;
+        } 
+        else if(currentGameState == Game.GameState.PAUSED)
+        {
+            //  save state - > go to pause scene
+            //
+        }
+        else if(currentGameState == Game.GameState.PLAYING)
+        {
+            // do game play phases
+            //
+            foreach(Player player in players)
+            {
+                if( gameBounds.Contains(player.transform.position) == false )
+                {
+                    Debug.Log(player+" is out of Bounds");
+                    // player.transform.position= game.gameBounds.ClosestPoint(player.transform.position);
+                    player.goToStartPosition();
+                    // game.resetGame();
+                
+                }
+            }
+            if( gameBounds.Contains(ball.transform.position) == false )
+            {
+                Debug.Log(ball+" is out of Bounds");
+                // player.transform.position= game.gameBounds.ClosestPoint(player.transform.position);
+                ball.transform.position = middle;
+                // game.resetGame();
+            
+            }
+        }
+        else if(currentGameState == Game.GameState.STOPPED)
+        {
+            // go to start scene
+            //
+        }
         updateComponents();
     }
 
@@ -132,21 +184,28 @@ public class Game : MonoBehaviour
 
     public void setupArea()
     {   
-        var width = 100;
-        var depth = 100;
+        var width = 200;
+        var height = 100000;
+        var depth = 200;
         
-        GameObject areaPlane = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        areaPlane.transform.position = new Vector3(0,0,0);
-        areaPlane.transform.localScale = new Vector3(10,0,10);
-        for(var x =0; x< width ; x++)
-        {
-            for (var z = 0; z < depth; z++) //z for 3d plane
-            {
-                GameObject areaCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                areaCube.transform.position = new Vector3(x,0,z); 
-            }
+        // boundArea
+        gameBounds = new Bounds(new Vector3(0,0,0),new Vector3(width,height,depth));
+        // middle = gameBounds.center;
+        // Gizmos.color = Color.red;
+        // Gizmos.DrawWireCube(middle,new Vector3(width,height,depth));
+
+        // GameObject areaPlane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        // areaPlane.transform.position = new Vector3(0,0,0);
+        // areaPlane.transform.localScale = new Vector3(10,0,10);
+        // for(var x =0; x< width ; x++)
+        // {
+        //     for (var z = 0; z < depth; z++) //z for 3d plane
+        //     {
+        //         GameObject areaCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        //         areaCube.transform.position = new Vector3(x,0,z); 
+        //     }
             
-        }
+        // }
     }
 
     public GameObject getBall()
@@ -189,9 +248,14 @@ public class Game : MonoBehaviour
     // }
 
     public void resetGame() {
+        currentGameState = GameState.KICKOFF;
         playerManager.resetPlayers();
+        Debug.Log("reset players");
         // ballManager.getBall().reset();
         ball.GetComponentInChildren<Ball>().reset();
+        // playerManager.setPlayerStates(players,playerManager.linedUp);
+        Debug.Log("reset ball");
+        playerManager.update(this);
     }
 
     public void setOffense(Team team)
@@ -273,13 +337,13 @@ public class Game : MonoBehaviour
         }
     }
 
-    public void reset()
-    {
-        //set playerStatus = PlayerStatus.LINED_UP;
-        playerManager.setPlayerStates(players,playerManager.linedUp);
-        playerManager.update(this);
-        // kickOff();
-    }
+    // public void reset()
+    // {
+    //     set playerStatus = PlayerStatus.LINED_UP;
+    //     playerManager.setPlayerStates(players,playerManager.linedUp);
+    //     playerManager.update(this);
+    //     kickOff();
+    // }
     // public void ballsOut()
     // {
     //     foreach(Player player in players)

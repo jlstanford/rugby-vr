@@ -4,33 +4,14 @@ using UnityEngine;
 
 public class VRGrab : ActionsScript
 {
-    // /// <summary>
-    // /// What we're colliding with
-    // /// </summary>
-    // public GameObject collidingObject;
-    // /// <summary>
-    // /// What we're holding
-    // /// </summary>
-    // public GameObject heldObject;
-    // public float throwForce;
+    
     private bool gripHeld;
     private VRInput controller;
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     collidingObject = other.gameObject;
-    // }
-
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     if (other.gameObject == collidingObject)
-    //     {
-    //         collidingObject = null;
-    //     }
-    // }
     // Start is called before the first frame update
     void Awake()
     {
         controller = GetComponent<VRInput>();
+        player = GetComponentInParent<Player>();
     }
 
     private void Start()
@@ -63,15 +44,34 @@ public class VRGrab : ActionsScript
     public void Grab()
     {
         if(heldObject.GetComponent<Ball>()){
-            Debug.Log("Grabbing Ball!");
-            heldObject.transform.SetParent(this.transform);
-            heldObject.GetComponent<Rigidbody>().isKinematic = true;
-            heldObject.GetComponent<Ball>().isBeingHeld = true;
+            var ball = heldObject;
+            Debug.Log("VR Grabbing Ball!");
+            // heldObject.transform.SetParent(this.transform);
+            // heldObject.GetComponent<Rigidbody>().isKinematic = true;
+            // heldObject.GetComponent<Ball>().isBeingHeld = true;
+            //  heldObject = ball;
+            Debug.Log(this+"Caught the Ball!"+ball.GetComponent<Ball>());
+            ball.transform.SetParent(this.transform);
+            // ball.transform.position.y = 1.0f;
+            ball.transform.position = new Vector3(ball.transform.position.x,1.0f,ball.transform.position.z);
+            // heldObject.GetComponent<Rigidbody>().isKinematic = true;
+            ball.GetComponent<Ball>().isBeingPassed = false;
+            ball.GetComponent<Ball>().isBeingHeld = true;
+            ball.GetComponent<Ball>().isOut = false;
+            ball.GetComponent<Ball>().currentBallState = Ball.ballIsBeingHeld;
+            ball.GetComponent<Rigidbody>().useGravity = false;
+            ball.GetComponent<Rigidbody>().isKinematic = true;
+            player.isBallHolder = true;
+            // playerManager.updatePossession(playerTeam);
+            player.playerManager.ballHolder = player;
+            player.heldObject = ball;
+            player.currentState = PlayerManager.ballCarrying;
+            // heldObject.GetComponent<Ball>().currentBallState = Ball.ballIsBeingHeld;
         }
         //if heldObject is Player and Player.isBallHolder == true - Player.PlayerState = PlayerState.Down
-        if(heldObject.GetComponent<Player>()){
-            Debug.Log("Grabbing Player :"+heldObject.GetComponent<Player>());
-            this.GetComponentInParent<Player>().tackle( heldObject.GetComponent<Player>() );
+        if(heldObject.GetComponent<AIPlayer>()){
+            Debug.Log("VR Grabbing Player :"+heldObject.GetComponent<Player>());
+            player.tackle( heldObject.GetComponent<Player>() );
         }
     }
 
@@ -79,14 +79,25 @@ public class VRGrab : ActionsScript
     {
         //throw
         if(heldObject.GetComponent<Ball>()){
+            var ball = heldObject.GetComponent<Ball>();
             Rigidbody rb = heldObject.GetComponent<Rigidbody>();
-            Debug.Log(controller.velocity);
-            Debug.Log("Ball is being thrown at:"+controller.velocity*throwForce);
+            Debug.Log("VR velocity"+controller.velocity);
+            Debug.Log("VR Ball is being thrown at:"+controller.velocity*throwForce);
             //float velocity = Mathf.Sqrt(dist * Physics.gravity.magnitude / Mathf.Sin(2 * a));
             rb.velocity = controller.velocity * throwForce;
-            heldObject.transform.SetParent(null);
             heldObject.GetComponent<Rigidbody>().isKinematic = false;
             heldObject.GetComponent<Ball>().isBeingHeld = false;
+            heldObject.GetComponent<Rigidbody>().useGravity = true;
+            ball.isBeingPassed = true;
+            ball.isBeingHeld = false;
+            ball.isOut = false;
+            ball.currentBallState = Ball.ballIsBeingPassed;
+
+            
+            player.isBallHolder = false;
+            heldObject.transform.SetParent(null);
+            player.heldObject = null;
+            
         }
         
         heldObject = null;

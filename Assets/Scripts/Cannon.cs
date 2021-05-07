@@ -21,18 +21,18 @@ public class Cannon : MonoBehaviour
     private void Start()
     {
      
-        InvokeRepeating("FireCannonAtPoint", 0.2f, 7.0f);
+        // InvokeRepeating("FireCannonAtPoint", 0.2f, 7.0f);
         
     }
 
     private void Update()
     {
         //
-        if( ball.GetComponent<Ball>().isBeingHeld == true ) //ball is not a child of the cannon
-        {
-            //dontkeepspawningball
-            CancelInvoke();
-        }
+        // if( ball.GetComponent<Ball>().isBeingHeld == true ) //ball is not a child of the cannon
+        // {
+        //     //dontkeepspawningball
+        //     CancelInvoke();
+        // }
         // else if( ball.GetComponent<Ball>().isBeingHeld !=  true) 
         // {
         //     // repeatspawn
@@ -45,11 +45,11 @@ public class Cannon : MonoBehaviour
             
     }
 
-    private void FireCannonAtPoint()//Vector3 point
+    public void FireCannonAtPoint()//Vector3 point
     {
         // targetObject.transform.position
         //GetComponent<Player>().nearestTeammate.transform.position
-        var point = GetComponent<Player>().isOffending == true  ? GetComponent<AIPlayer>().getNearestTeammate().transform.position: GetComponent<AIPlayer>().getNearestEnemy().transform.position;
+        var point = GetComponent<Player>().isOffending == true  ? GetComponent<Player>().getNearestTeammate().transform.position: GetComponent<Player>().getNearestEnemy().transform.position;
         var velocity = BallisticVelocity(point+destinationOffset, angle);
         velocity = velocity * passForce;
         Debug.Log("Cannon launching at " + point + " velocity " + velocity);

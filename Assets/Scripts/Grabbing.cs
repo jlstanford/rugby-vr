@@ -6,10 +6,18 @@ public class Grabbing: AIPlayerState
 {
     public AIPlayerState DoState(Player player)
     {
+        Debug.Log("grabbing ball state");
        //pick up colliding object 
-       player.GetComponent<AIPlayer>().pickUp(player.game.ball);
+       if(player.collidingObject!=null && player.collidingObject.tag == "GameBall")
+       {
+            player.GetComponent<Player>().pickUp(player.collidingObject); 
+            return PlayerManager.ballCarrying; 
+       } else
+       {
+            return PlayerManager.chasing;
+       }
+       
        //set colliding object parent to player
-       return player.playerManager.ballCarrying;
     }
     // Start is called before the first frame update
     void Start()

@@ -11,13 +11,29 @@ public class Catching : AIPlayerState
         // GetComponent<AIPlayer>().catch_( ball);
         var rnd = new System.Random();
         var randNum = rnd.Next();
-        if (randNum%2 == 0 ) {
-            player.GetComponent<AIPlayer>().catch_(player.collidingObject);
+        if(player.TryGetComponent<AIPlayer>(out AIPlayer aiPlayer) )
+        {
+            if (randNum%2 == 0 ) {
+            player.GetComponent<Player>().catch_(player.game.ball);
             player.playerManager.updatePossession(player.playerTeam);
-            return player.playerManager.ballCarrying;
-        } else {
-            return player.playerManager.chasing;
+            return PlayerManager.ballCarrying;
+            } else {
+                return PlayerManager.chasing;
+            }
+        }else if(player.TryGetComponent<VRPlayer>(out VRPlayer vrPlayer) )
+        {
+            if(player.heldObject != null && player.heldObject.TryGetComponent<Ball>(out Ball ball) == true) 
+            {
+                return PlayerManager.ballCarrying;
+            } else 
+            {
+                return PlayerManager.chasing;
+            }
+        } else
+        {
+            return this;
         }
+        
         
     }
     // Start is called before the first frame update
