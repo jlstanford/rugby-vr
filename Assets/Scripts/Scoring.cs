@@ -6,22 +6,27 @@ public class Scoring : AIPlayerState
 {
     public AIPlayerState DoState(Player player)
     {
-        Debug.Log("You scored!!!");
-        // player.drop(player.game.ball.GetComponent<Ball>());
-        player.playerManager.updatePossession(player.playerTeam);
-        player.game.updateScoreFor(player.playerTeam, 5 );
-        player.game.resetGame();
-        return PlayerManager.linedUp;
+        //touchDown Anim
+        if (player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Scoring"))
+        {
+            return PlayerManager.scoring;
+        }else{
+           Debug.Log("You scored!!!");
+            player.isBallHolder = false;
+            player.playerManager.ballHolder = null;
+            
+            // player.stopForAnim();
+            // player.StartCoroutine(stopMovingTimer());
+            // player.playerManager.updatePossession(player.playerTeam);  TODO: uncomment for next iteration; team with possession will be the team receiving the kickoff
+            player.game.updateScoreFor(player.playerTeam, 5 );
+            player.game.resetGame();
+            return PlayerManager.linedUp; 
+        }
+        
     } 
-    // Start is called before the first frame update
-    void Start()
+    private IEnumerator stopMovingTimer()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("waiting for 7 seconds");
+        yield return new WaitForSecondsRealtime(7);
     }
 }

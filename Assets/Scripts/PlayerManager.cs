@@ -180,6 +180,7 @@ public class PlayerManager : MonoBehaviour
     {
         foreach(Team team in playerRegistry.Keys)
         {
+            Debug.Log("resetting players in " + team);
             playerRegistry[team].ForEach( player => {player.currentState = linedUp;} );
         }
     }

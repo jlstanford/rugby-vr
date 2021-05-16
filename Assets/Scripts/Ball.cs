@@ -117,7 +117,7 @@ public class Ball : GrabbableObjectVR
     //  use lerp to get ball from player hand to teammate rigidbody ?
     public void BePassedBy(Player player,Vector3 point)
     {
-        var velocity = player.GetComponent<AIPlayer>().calculatePassVelocity(point, 45);
+        var velocity = player.calculatePassVelocity(point, 45);
         Debug.Log("Passing at " + point + " velocity " + velocity);
         this.transform.position = player.transform.position;
         this.GetComponent<Rigidbody>().velocity = velocity*player.GetComponent<AIPlayer>().throwForce;
@@ -137,7 +137,7 @@ public class Ball : GrabbableObjectVR
     public void beDroppedBy(Player player)
     {
         var dropPosition = player.transform.position;
-        this.transform.position= new Vector3(dropPosition.x,0,dropPosition.z+20);// 20 for the bounce offset so it falls away fom player
+        this.transform.position= new Vector3(dropPosition.x+10,0.05f,dropPosition.z+10);// y has to be slightly above 0.0f so that it wont fall into the ground, z has 5 bounce offset so it falls away fom player -- TODO: should fall in direction player is running
         Debug.Log("Ball Dropped at "+this.transform.position+"!");
         currentBallState = ballIsOut;
     }

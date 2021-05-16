@@ -16,19 +16,13 @@ public class Engaging : AIPlayerState
             // player.ball.GetComponent<Ball>().isOut = true;
             // player.ball.GetComponent<Ball>().isOut = true;
             player.GetComponent<Player>().drop(player.ball.GetComponent<Ball>());
-            return PlayerManager.down;
+            return PlayerManager.goingDown;
         }
         // return this;
     }
-    // Start is called before the first frame update
-    void Start()
+    private IEnumerator stopMovingTimer()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("waiting for 7 seconds");
+        yield return new WaitForSecondsRealtime(7);
     }
 }

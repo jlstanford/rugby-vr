@@ -106,7 +106,11 @@
      <Compile Include="Assets\Scripts\VRJoystickMovement.cs" />
      <Compile Include="Assets\Scripts\VRPlayer.cs" />
      <Compile Include="Assets\Scripts\Winger.cs" />
+     <Compile Include="Assets\StopMovingForAnimation.cs" />
+     <Compile Include="Assets\simple modular human\scripts\Test_script.cs" />
+     <Compile Include="Assets\simple modular human\scripts\clothing.cs" />
      <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
+     <None Include="Assets\simple modular human\readMe.txt" />
      <None Include="Assets\VRWaterShader2\Readme.txt" />
      <None Include="Assets\VRWaterShader2\VRWaterShader(legacy)\Shaders\ZWrite Standard.shader" />
      <None Include="Assets\Fantasy Skybox FREE\Readme.txt" />

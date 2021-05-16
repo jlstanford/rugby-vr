@@ -38,6 +38,7 @@ public class Game : MonoBehaviour
     [System.Serializable]
     public enum GameStyle
     {
+        PRACTICE,
         SEVENS,
         FIFTEENS
     }
@@ -46,6 +47,7 @@ public class Game : MonoBehaviour
     {
         PAUSED,
         PLAYING,
+        SHOWING_SCORE,
         STOPPED,
         KICKOFF
     }
@@ -65,24 +67,12 @@ public class Game : MonoBehaviour
     public Ball ballManager;
     public Bounds gameBounds;
 
-/*
-*
-* public void init(Game game) 
-    {
-        
-        this.score = 0;
-    }
-*
-*
-
-*/
-
-
     void Start()
     {
         setupArea();
+        this.game = this;
         this.transform.position = new Vector3(this.transform.position.x,0,this.transform.position.z);
-        this.gameStyle = GameStyle.SEVENS;
+        this.gameStyle = GameStyle.PRACTICE;
         this.scores = new int[2];
         // sides = new Dictionary<Team,Side>();
         tryZoneAreas = new Dictionary<Side,GameObject>{
@@ -97,17 +87,6 @@ public class Game : MonoBehaviour
         // Debug.Log("Player registry"+playerManager.playerRegistry);
         playerManager.addTeamToRegistry(Team.TEAM_HONDA,teamHondaPlayers);
         playerManager.setPlayers(players);
-        //register and init players
-        // foreach(Player player in players)
-        // {
-        //     // Debug.Log("TS"+player);
-        //     //put players in position
-        //     player.transform.position = new Vector3(this.transform.position.x,0,this.transform.position.z);
-        //     player.init(this,playerManager);
-        //     // player.setTeam(this);
-        //     // player.setGame(game);
-        //     Debug.Log(player);
-        // }
         teams = (Team[])Team.GetValues(typeof(Team));
         
         //Ball MANager
@@ -119,8 +98,6 @@ public class Game : MonoBehaviour
         setScore(Team.TEAM_HONDA,0);
         currentGameState = GameState.KICKOFF;
         updateComponents();
-     
-        
     }
 
     // Update is called once per frame
@@ -167,6 +144,10 @@ public class Game : MonoBehaviour
             
             }
         }
+        // else if(currentGameState == Game.GameState.SHOWING_SCORE)
+        // {
+        //     //show 
+        // }
         else if(currentGameState == Game.GameState.STOPPED)
         {
             // go to start scene
@@ -184,7 +165,7 @@ public class Game : MonoBehaviour
 
     public void setupArea()
     {   
-        var width = 200;
+        var width = 200; // TODO: change to 100 - i will have to move the try zone in 
         var height = 100000;
         var depth = 200;
         
@@ -194,18 +175,6 @@ public class Game : MonoBehaviour
         // Gizmos.color = Color.red;
         // Gizmos.DrawWireCube(middle,new Vector3(width,height,depth));
 
-        // GameObject areaPlane = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        // areaPlane.transform.position = new Vector3(0,0,0);
-        // areaPlane.transform.localScale = new Vector3(10,0,10);
-        // for(var x =0; x< width ; x++)
-        // {
-        //     for (var z = 0; z < depth; z++) //z for 3d plane
-        //     {
-        //         GameObject areaCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //         areaCube.transform.position = new Vector3(x,0,z); 
-        //     }
-            
-        // }
     }
 
     public GameObject getBall()
@@ -215,7 +184,7 @@ public class Game : MonoBehaviour
 
     public Player getBallHolder()
     {
-        return ballHolder;
+        return this.ballHolder;
     }
 
     public void setBallHolder(Player player)
@@ -255,7 +224,8 @@ public class Game : MonoBehaviour
         ball.GetComponentInChildren<Ball>().reset();
         // playerManager.setPlayerStates(players,playerManager.linedUp);
         Debug.Log("reset ball");
-        playerManager.update(this);
+        updateComponents();
+        // playerManager.update(this);
     }
 
     public void setOffense(Team team)
@@ -308,8 +278,7 @@ public class Game : MonoBehaviour
         {
             scores[(int)Team.TEAM_CARNIVAL] += pointsScored;
         } else {scores[(int)Team.TEAM_HONDA] += pointsScored;}
-        //scores[0] = team.score
-        // setScores(team,enemyTeam);
+        //game.currentGameState = game.GameState.SHOWING_SCORE;
     }
 
     public void updatePossession(Team offTeam)
@@ -336,25 +305,6 @@ public class Game : MonoBehaviour
             }
         }
     }
-
-    // public void reset()
-    // {
-    //     set playerStatus = PlayerStatus.LINED_UP;
-    //     playerManager.setPlayerStates(players,playerManager.linedUp);
-    //     playerManager.update(this);
-    //     kickOff();
-    // }
-    // public void ballsOut()
-    // {
-    //     foreach(Player player in players)
-    //     {
-    //         player.playerState = PlayerState.BALLS_OUT;
-    //         // Debug.Log(team.teamState);
-    //     }
-    //     // playerTeam.updatePossessionState(PlayerState.BALLS_OUT);
-    //     // enemyTeam.updatePossessionState(PlayerState.BALLS_OUT);
-    //     Debug.Log("BALLS OUT!");
-    // }
 
     
 

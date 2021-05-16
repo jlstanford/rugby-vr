@@ -102,22 +102,6 @@ public void setTeam(Team team)
     this.playerTeam = team;
 }
 
-// public void touchDown()
-// {
-//     //stop running
-//     //score
-//     Debug.Log("You scored!!!");
-//     // playerState = PlayerState.LINED_UP;
-//     // playerTeam.updatePossessionState();
-//     // isOffending = true;
-//     playerManager.updatePossession(playerTeam);
-//     // drop(ball.GetComponent<Ball>());
-//     game.updateScoreFor(playerTeam, 5 );
-//     game.reset();
-//     // game.resetGame();
-    
-// }
-
 
 public virtual void tackle(Player playerBeingTackled){
     Debug.Log("tackling:"+playerBeingTackled+" do they have the ball? "+ playerBeingTackled.isBallHolder);
@@ -187,9 +171,9 @@ public void tryToScore()
         
     }
 
-    private Vector3 calculatePassVelocity(Vector3 recievingPlayer, float angle)
+    public Vector3 calculatePassVelocity(Vector3 recievingPlayerPosition, float angle)
     {
-        Vector3 dir = recievingPlayer - this.position; // get Target Direction
+        Vector3 dir = recievingPlayerPosition - this.position; // get Target Direction
             float height = dir.y; // get height difference
             dir.y = 0; // retain only the horizontal difference
             float dist = dir.magnitude; // get horizontal distance
@@ -236,6 +220,20 @@ public void tryToScore()
         Debug.Log(this+"calling goToStartPosition");
         goToStartPosition();
     }
+
+    public virtual void stopForAnim()
+    {
+        Vector3 maxDistanceDelta = Vector3.MoveTowards(transform.position, transform.position ,0);
+        transform.position = new Vector3(maxDistanceDelta.x,0,maxDistanceDelta.z);
+        // StartCoroutine(stopMovingTimer());
+        Debug.Log(this+"at"+transform.position+" stopped to perform anim at "+transform.position);
+    
+    }
+    // private IEnumerator stopMovingTimer()
+    // {
+    //     Debug.Log("waiting for 7 seconds");
+    //     yield return new WaitForSecondsRealtime(7);
+    // }
 
     public virtual void getStaggered()
     {

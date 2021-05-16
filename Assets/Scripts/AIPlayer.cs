@@ -68,14 +68,14 @@ public class AIPlayer : Player
         // var velocity = calculatePassVelocity(point, 45);
         // velocity = velocity * throwForce;
         ball.GetComponent<Ball>().BePassedBy(this,point);
-        isBallHolder = false;
-        heldObject = null;
+        this.isBallHolder = false;
+        this.heldObject = null;
         
     }
 
-    public Vector3 calculatePassVelocity(Vector3 recievingPlayer, float angle)
+    public Vector3 calculatePassVelocity(Vector3 recievingPlayerPosition, float angle)
     {
-        Vector3 dir = recievingPlayer - this.position; // get Target Direction
+        Vector3 dir = recievingPlayerPosition - this.position; // get Target Direction
             float height = dir.y; // get height difference
             dir.y = 0; // retain only the horizontal difference
             float dist = dir.magnitude; // get horizontal distance
@@ -109,13 +109,18 @@ public class AIPlayer : Player
     }
     public override void pickUp(GameObject ball)
     {
-        heldObject = ball;
-        Debug.Log("Picked up the Ball!");
-        isBallHolder = true;
-        heldObject = ball;
-        playerManager.ballHolder = this;
-        playerManager.updatePossession(playerTeam);
-        ball.GetComponent<Ball>().bePickedUpBy(this);
+        if(ball != null && ball.TryGetComponent<Ball>(out Ball ball_) == true ){
+            heldObject = ball;
+            Debug.Log("Picked up the Ball!");
+            isBallHolder = true;
+            // heldObject = ball;
+            playerManager.ballHolder = this;
+            playerManager.updatePossession(playerTeam);
+            ball_.bePickedUpBy(this); 
+        }
+        
+        
+        
     }
     public override void lineUp()
     {
@@ -221,6 +226,21 @@ public class AIPlayer : Player
         // tranform.position.y = 0;
         // transform.position.z = transform.postion.z;
         Debug.Log(this+"at"+transform.position+" is running toward "+obj+" at "+obj.GetComponent<Transform>().position);
+    }
+
+    public override void stopForAnim()
+    {
+        Vector3 maxDistanceDelta = Vector3.MoveTowards(transform.position, transform.position ,0);
+        transform.position = new Vector3(maxDistanceDelta.x,0,maxDistanceDelta.z);
+        stopTimer();
+        Debug.Log(this+"at"+transform.position+" stopped to perform anim at "+transform.position);
+    
+    }
+    
+    private IEnumerator stopTimer()
+    {
+        Debug.Log("waiting for 7 seconds");
+        yield return new WaitForSeconds(7);
     }
 
 }

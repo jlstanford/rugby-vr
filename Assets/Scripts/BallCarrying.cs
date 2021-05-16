@@ -7,26 +7,34 @@ public class BallCarrying : AIPlayerState
     public AIPlayerState DoState(Player player)
     {
         // if(player.isBallHolder){
-            player.playerManager.updatePossession(player.playerTeam);
+            // player.playerManager.updatePossession(player.playerTeam);
             Debug.Log("running toward ball carrying player "+player+"'s tryzone: "+player.tryZone);
-            if(player.TryGetComponent<AIPlayer>(out AIPlayer aiPlayer) == true)
+            
+            if (player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Down"))
             {
-               player.GetComponent<AIPlayer>().runToward(player.tryZone); 
-            }
-            if(Vector3.Distance(player.transform.position, player.nearestEnemy.transform.position) < 15  )//player.nearestEnemy.GetComponent<AIPlayer>().currentState.ToString() ==  "Tackling"
+                return PlayerManager.down;
+            } else if (player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Tackling"))
+            {
+                return PlayerManager.tackling;
+            } else if (player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("GoingDown"))
+            {
+                return PlayerManager.goingDown;
+            } 
+            else if(Vector3.Distance(player.transform.position, player.nearestEnemy.transform.position) < 2.0f  )//player.nearestEnemy.GetComponent<AIPlayer>().currentState.ToString() ==  "Tackling"
             {
                 return PlayerManager.engaging;
-            }else if(Vector3.Distance(player.transform.position, player.tryZone.transform.position) < 0.1f )//player.collidingObject.tag == "TryZoneA" || player.collidingObject.tag == "TryZoneB"
+            }else if(Vector3.Distance(player.transform.position, player.tryZone.transform.position) < 0.03f )//player.collidingObject.tag == "TryZoneA" || player.collidingObject.tag == "TryZoneB"
             {
                 return PlayerManager.scoring;
-            } else 
+            } else if(player.TryGetComponent<AIPlayer>(out AIPlayer aiPlayer) == true && player.heldObject != null && player.heldObject.tag == "GameBall" && !player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Down"))
             {
-                return PlayerManager.ballCarrying; 
+               player.GetComponent<AIPlayer>().runToward(player.tryZone); 
+                //  
+                return PlayerManager.ballCarrying;
             }
-        // }
-        // else {
-        //     return player.playerManager.staggered;
-        // }
+            else {
+                return PlayerManager.chasing;
+            }
     
     
     }

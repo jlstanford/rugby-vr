@@ -7,19 +7,20 @@ public class GoingDown : AIPlayerState
     public AIPlayerState DoState(Player player)
     {
         // player.goToStartPosition();
-        player.drop(player.game.ball.GetComponent<Ball>());
-            
-        return PlayerManager.down;
+        // player.stopForAnim();
+        // player.StartCoroutine(stopMovingTimer());
+        if (player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("GoingDown"))
+        {
+            return PlayerManager.goingDown;
+        }else {
+            player.drop(player.game.ball.GetComponent<Ball>());
+            return PlayerManager.down;
+        }  
+        
     } 
-    // Start is called before the first frame update
-    void Start()
+    private IEnumerator stopMovingTimer()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("waiting for 7 seconds");
+        yield return new WaitForSecondsRealtime(7);
     }
 }

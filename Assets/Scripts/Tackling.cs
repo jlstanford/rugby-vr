@@ -6,27 +6,33 @@ public class Tackling : AIPlayerState
 {
     public AIPlayerState DoState(Player player)
     {
-        
+            // player.stopForAnim();
+            // player.StartCoroutine(stopMovingTimer());
+            if (player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Tackling"))
+            {
+                return PlayerManager.tackling;
+            }
             if(player.collidingObject == null)
             {
-                //Do nothing special
+                // Do nothing special
+                return PlayerManager.chasing;
             }
             else if(player.collidingObject.TryGetComponent<Player>(out Player targetPlayer) == true)
             {
-                targetPlayer.currentState = PlayerManager.goingDown;
+                player.collidingObject.GetComponent<Player>().currentState = PlayerManager.engaging;
+            // targetPlayer.currentState = PlayerManager.goingDown;
+                return PlayerManager.chasing;
                 
+            }else
+            {
+               // Do nothing special
+                return PlayerManager.chasing;
             }
-            return PlayerManager.chasing;
+            
     } 
-    // Start is called before the first frame update
-    void Start()
+    private IEnumerator stopMovingTimer()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("waiting for 7 seconds");
+        yield return new WaitForSecondsRealtime(7);
     }
 }

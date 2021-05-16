@@ -7,15 +7,20 @@ public class Grabbing: AIPlayerState
     public AIPlayerState DoState(Player player)
     {
         Debug.Log("grabbing ball state");
-       //pick up colliding object 
-       if(player.collidingObject!=null && player.collidingObject.tag == "GameBall")
-       {
-            player.GetComponent<Player>().pickUp(player.collidingObject); 
-            return PlayerManager.ballCarrying; 
-       } else
-       {
-            return PlayerManager.chasing;
-       }
+     //pick up colliding object 
+     // if(player.collidingObject!=null && player.collidingObject.tag == "GameBall")
+     // {
+          player.GetComponent<Player>().pickUp(player.collidingObject); 
+          return PlayerManager.ballCarrying; 
+     // } 
+     // else if(player.collidingObject==null)
+     // {
+     //      //   player.GetComponent<Player>().pickUp(player.collidingObject); 
+     //      return PlayerManager.chasing; 
+     // } else
+     // {
+     //      return PlayerManager.grabbing;
+     // }
        
        //set colliding object parent to player
     }
