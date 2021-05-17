@@ -162,9 +162,7 @@ public class AIPlayer : Player
         Debug.Log("collding object tag:"+collidingObject.tag);
         Debug.Log("ballHolding player:"+GetComponent<AIPlayer>().isBallHolder);
 
-        if(collidingObject.tag == $"{playerTeam} Player" && isBallHolder == true ) {
-
-
+        if(collidingObject.tag == $"{playerTeam.getOpposingTeam()} Player" && isBallHolder == true ) {
             Debug.Log("in go down trigger");
             currentState = PlayerManager.goingDown;
         }else if( collidingObject.GetComponent<AIPlayer>() == playerManager.ballHolder && playerManager.ballHolder != null ) { // collidingObject.TryGetComponent<AIPlayer>(out AIPlayer collidingPlayer) == true
@@ -206,12 +204,12 @@ public class AIPlayer : Player
         if(this.isLeftOf(nearestTeammate)) //nearestTeammate
         {
             Debug.Log(this+" is staggering right");
-            this.transform.position  = new Vector3(nearestTeammate.transform.position.x - 15,0,nearestTeammate.transform.position.z - 15);
+            this.transform.position  = new Vector3(nearestTeammate.transform.position.x - 5,0,nearestTeammate.transform.position.z - 3);
             // player.transform.position.z  = ;
         }else if(this.isRightOf(nearestTeammate))//nearestTeammate
         {
             Debug.Log(this+" is staggering left");
-            this.transform.position  = new Vector3(nearestTeammate.transform.position.x + 15,0, nearestTeammate.transform.position.z - 15);
+            this.transform.position  = new Vector3(nearestTeammate.transform.position.x + 5,0, nearestTeammate.transform.position.z - 3);
             
         }
     }

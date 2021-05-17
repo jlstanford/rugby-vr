@@ -18,7 +18,7 @@ public class PlayerAnimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.currentStateName == "Chasing" || player.currentStateName == "Following" || player.currentStateName == "BallCarrying"  )
+        if ( (player.currentStateName == "Chasing" || player.currentStateName == "Following" || player.currentStateName == "BallCarrying") && player.TryGetComponent(out AIPlayer aiplayer) == true)
         {
             Debug.Log("animating running");
             playerAnimator.SetBool("Down",false);

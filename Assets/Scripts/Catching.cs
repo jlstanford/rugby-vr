@@ -14,9 +14,9 @@ public class Catching : AIPlayerState
         if(player.TryGetComponent<AIPlayer>(out AIPlayer aiPlayer) )
         {
             if (randNum%2 == 0 ) {
-            player.GetComponent<Player>().catch_(player.game.ball);
-            player.playerManager.updatePossession(player.playerTeam);
-            return PlayerManager.ballCarrying;
+                player.GetComponent<Player>().catch_(player.game.ball);
+                player.playerManager.updatePossession(player.playerTeam);
+                return PlayerManager.ballCarrying;
             } else {
                 return PlayerManager.chasing;
             }

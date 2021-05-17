@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
@@ -277,8 +278,22 @@ public class Game : MonoBehaviour
         if(team == Team.TEAM_CARNIVAL)
         {
             scores[(int)Team.TEAM_CARNIVAL] += pointsScored;
-        } else {scores[(int)Team.TEAM_HONDA] += pointsScored;}
-        //game.currentGameState = game.GameState.SHOWING_SCORE;
+        } else {
+            scores[(int)Team.TEAM_HONDA] += pointsScored;
+        }
+        List<Text> texts = new List<Text>();
+        this.GetComponentsInChildren<Text>(texts);
+ 
+        foreach (Text text in texts)
+        {
+            if (text.name == "TeamCarnivalScore")
+            {
+                text.text = scores[(int)Team.TEAM_CARNIVAL].ToString();
+            }else if(text.name == "TeamHondaScore")
+            {
+                text.text = scores[(int)Team.TEAM_HONDA].ToString();
+            }
+        }
     }
 
     public void updatePossession(Team offTeam)

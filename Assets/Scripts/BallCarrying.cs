@@ -26,9 +26,14 @@ public class BallCarrying : AIPlayerState
             }else if(Vector3.Distance(player.transform.position, player.tryZone.transform.position) < 0.03f )//player.collidingObject.tag == "TryZoneA" || player.collidingObject.tag == "TryZoneB"
             {
                 return PlayerManager.scoring;
-            } else if(player.TryGetComponent<AIPlayer>(out AIPlayer aiPlayer) == true && player.heldObject != null && player.heldObject.tag == "GameBall" && !player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Down"))
+            } 
+            else if( player.GetComponent( typeof(Player) ) != null && player.heldObject != null && player.heldObject.tag == "GameBall" && !player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Down") )
             {
-               player.GetComponent<AIPlayer>().runToward(player.tryZone); 
+                if(player.TryGetComponent<AIPlayer>(out AIPlayer aiPlayer) == true)
+                {
+                   player.GetComponent<AIPlayer>().runToward(player.tryZone);  
+                }
+               
                 //  
                 return PlayerManager.ballCarrying;
             }

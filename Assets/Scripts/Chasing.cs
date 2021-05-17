@@ -21,7 +21,9 @@ public class Chasing : AIPlayerState
         else if(Vector3.Distance(player.transform.position, player.game.ball.transform.position) < 2.0f && player.game.ball.GetComponent<Ball>().isBeingHeld == true)
         {
             return PlayerManager.tackling;
-        }else
+        }
+        //
+        else
         {
             return PlayerManager.chasing;
         }

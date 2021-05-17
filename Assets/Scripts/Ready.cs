@@ -7,6 +7,7 @@ public class Ready : AIPlayerState
     public AIPlayerState DoState(Player player)
     {
         // player.goToStartPosition();
+        // TODO: check that this is working
         if(player.playerManager.ballHolder != null && player.playerManager.ballHolder.playerTeam != player.playerTeam)
         {
             return PlayerManager.chasing;

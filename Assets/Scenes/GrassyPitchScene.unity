@@ -630,7 +630,7 @@ GameObject:
   - component: {fileID: 161496445}
   m_Layer: 0
   m_Name: TeamHondaScore
-  m_TagString: Untagged
+  m_TagString: TeamHondaScore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -859,7 +859,7 @@ GameObject:
   - component: {fileID: 167735086}
   m_Layer: 0
   m_Name: TeamCarnivalScore
-  m_TagString: Untagged
+  m_TagString: TeamCarnivalScore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3686,6 +3686,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1003726534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003726527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79dc9c1c97694dc4f84a5ffc3069d8cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+  isBeingHeld: 0
+  grabOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &1020161067 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7219772299731422950, guid: a8fa9ce28e4d8a94d83b1cfb1514c7d9,
@@ -4143,6 +4158,7 @@ GameObject:
   - component: {fileID: 1249131736}
   - component: {fileID: 1249131735}
   - component: {fileID: 1249131737}
+  - component: {fileID: 1249131738}
   m_Layer: 9
   m_Name: XRRig
   m_TagString: Untagged
@@ -4235,7 +4251,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!65 &1249131736
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4268,6 +4284,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1249131738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249131731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aedfffdfc03c9fc4fbe57c922f1ea72e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  playerAnimator: {fileID: 0}
+  playerObject: {fileID: 0}
 --- !u!4 &1280798026 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4324904055579858554, guid: cf3f63826e612a241b81731a89313752,
@@ -8303,6 +8334,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Running
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466004343018801682, guid: 391aea7b957ddbf45b0d3809a8f1f440,
+        type: 3}
+      propertyPath: m_TagString
+      value: TEAM_HONDA Player
       objectReference: {fileID: 0}
     - target: {fileID: 4274593597013659816, guid: 391aea7b957ddbf45b0d3809a8f1f440,
         type: 3}

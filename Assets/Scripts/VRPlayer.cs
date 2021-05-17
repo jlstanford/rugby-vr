@@ -89,12 +89,16 @@ public class VRPlayer : Player
     public override void pickUp(GameObject ball)
     {
         heldObject = ball;
-        Debug.Log("Picked up the Ball!");
         isBallHolder = true;
         heldObject = ball;
         playerManager.ballHolder = this;
         playerManager.updatePossession(playerTeam);
-        ball.GetComponent<Ball>().bePickedUpBy(this);
+        if(ball != null && ball.TryGetComponent(out Ball ballObj))
+        {
+            Debug.Log("VR Picked up the Ball!");
+            ballObj.GetComponent<Ball>().bePickedUpBy(this);
+        }
+        
     }
     public override void lineUp()
     {
@@ -111,6 +115,50 @@ public class VRPlayer : Player
     public override void getStaggered()
     {
         Debug.Log("VR Player get staggered");
+    }
+
+     public void OnTriggerEnter(Collider other)
+    {
+        
+        Debug.Log("trigger override");
+        collidingObject = other.gameObject;
+        
+        Debug.Log("player performing trigger action"+GetComponent<VRPlayer>());
+        Debug.Log("collding object tag:"+collidingObject.tag);
+        Debug.Log("ballHolding player:"+GetComponent<VRPlayer>().isBallHolder);
+
+        if(collidingObject.tag == $"{playerTeam.getOpposingTeam()} Player" && isBallHolder == true ) {
+            Debug.Log("in go down trigger");
+            currentState = PlayerManager.goingDown;
+        }else if( collidingObject.GetComponent(typeof(Player)) == playerManager.ballHolder && playerManager.ballHolder != null ) { // collidingObject.TryGetComponent<AIPlayer>(out AIPlayer collidingPlayer) == true
+            // collidingObject.GetComponent<AIPlayer>().playerTeam != this.playerTeam
+            Debug.Log("tackling player - "+collidingObject.GetComponent(typeof(Player)));
+            // Debug.Log("tackling playerTeam - "+collidingObject.GetComponent(typeof(Player)).playerTeam);
+            // tackle(collidingObject.GetComponent<AIPlayer>());
+            base.actionTarget = (Player)collidingObject.GetComponent(typeof(Player));
+            base.collidingObject = collidingObject;
+            currentState = PlayerManager.tackling;
+        }else if(collidingObject.tag == "GameBall" && collidingObject.GetComponent<Ball>().isBeingPassed && collidingObject.GetComponent<Ball>().isOut == false) {
+            // attemptToCatch(collidingObject);
+            // Debug.Log(this+ " catching ball ");
+            currentState = PlayerManager.catching;
+        } else if(collidingObject.tag == "GameBall" && game.ball.GetComponent<Ball>().currentBallState == Ball.ballIsOut ) {
+            // attemptToCatch(collidingObject);
+            // Debug.Log(this+ " catching ball ");
+            Debug.Log("trigger pick up");
+            currentState = PlayerManager.grabbing;
+        }else if(collidingObject.tag == "TryZoneA" || collidingObject.tag == "TryZoneB" && collidingObject.tag == tryZone.ToString() )
+        {
+            Debug.Log(this+" got to the tryzone!");
+            if(isBallHolder )
+            {
+                currentState = PlayerManager.scoring;
+            }
+        }else
+        {
+            collidingObject = null;
+        }
+        
     }
      
     
